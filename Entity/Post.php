@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  * @orm:Table(name="blog_posts")
+ * @orm:Entity
  */
 class Post
 {
@@ -44,10 +45,10 @@ class Post
      * Tags for post
      * 
      * @var ArrayCollection
-     * @orm:ManyToMany(targetEntity="Stfalcon\BlogBundle\Entity\Tag")
-     * @orm:JoinTable(name="posts_tags",
-     *      joinColumns={orm:@JoinColumn(name="post_id", referencedColumnName="id")},
-     *      inverseJoinColumns={orm:@JoinColumn(name="tag_id", referencedColumnName="id")}
+     * @orm:ManyToMany(targetEntity="Stfalcon\Bundle\BlogBundle\Entity\Tag")
+     * @orm:JoinTable(name="blog_posts_tags",
+     *      joinColumns={@orm:JoinColumn(name="post_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@orm:JoinColumn(name="tag_id", referencedColumnName="id")}
      *      )
      */
     private $tags;

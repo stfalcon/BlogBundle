@@ -7,6 +7,7 @@ namespace Stfalcon\Bundle\BlogBundle\Entity;
  *
  * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  * @orm:Table(name="blog_tags")
+ * @orm:Entity
  */
 class Tag
 {
@@ -25,7 +26,7 @@ class Tag
      * 
      * @var text $text
      * @assert:NotBlank()
-     * @orm:Column(name="text", type="text")
+     * @orm:Column(name="text", type="string", length=255)
      */
     private $text;
 
