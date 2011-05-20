@@ -11,8 +11,9 @@ namespace Stfalcon\Bundle\BlogBundle\Entity;
 class Post
 {
     /**
-     * @var integer $id
+     * Post id
      *
+     * @var integer $id
      * @orm:Column(name="id", type="integer")
      * @orm:Id
      * @orm:GeneratedValue(strategy="AUTO")
@@ -20,7 +21,27 @@ class Post
     private $id;
 
     /**
+     * @var string $title
+     *
+     * @assert:NotBlank()
+     * @orm:Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * Set post id
+     *
+     * @param int $id
+     * @return void
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * Get post id
+     *
      * @return null|int
      */
     public function getId()
@@ -29,12 +50,24 @@ class Post
     }
 
     /**
-     * Set post id
-     * @param int $id
+     * Set post title
+     *
+     * @param string $title
+     * @return void
      */
-    public function setId($id)
+    public function setTitle($title)
     {
-        $this->id = $id;
+        $this->title = $title;
+    }
+
+    /**
+     * Get post title
+     *
+     * @return null|string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
 }

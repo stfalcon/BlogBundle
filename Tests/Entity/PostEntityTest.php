@@ -15,4 +15,14 @@ class PostEntityTest extends \PHPUnit_Framework_TestCase
         $post = new Post();
         $this->assertNull($post->getId());
     }
+
+    public function testSetAndGetPostTitle()
+    {
+        $title = "First blog post";
+
+        $post = new Post();
+        $post->setTitle($title);
+
+        $this->assertEquals($post->getTitle(), $title);
+    }
 }
