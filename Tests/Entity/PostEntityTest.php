@@ -3,6 +3,7 @@
 namespace Stfalcon\Bundle\BlogBundle\Tests\Entity;
 
 use Stfalcon\Bundle\BlogBundle\Entity\Post;
+use Stfalcon\Bundle\BlogBundle\Entity\Tag;
 
 /**
  * @author Stepan Tanasiychuk <ceo@stfalcon.com>
@@ -10,10 +11,14 @@ use Stfalcon\Bundle\BlogBundle\Entity\Post;
 class PostEntityTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testEmptyPostIdIsNull()
+    public function testEmptyPostId()
     {
         $post = new Post();
         $this->assertNull($post->getId());
+        $this->assertNull($post->getTitle());
+        $this->assertNull($post->getText());
+        $this->assertTrue(is_a($post->getTags(), 'Doctrine\Common\Collections\ArrayCollection'));
+        $this->assertEquals(count($post->getTags()), 0);
     }
 
     public function testSetAndGetPostTitle()
@@ -35,4 +40,18 @@ class PostEntityTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($post->getText(), $text);
     }
+
+    public function testAddTagToPostAndGetTags()
+    {
+        $post = new Post();
+        $tag1 = new Tag('symfony2');
+        $post->addTag($tag1);
+        $tag2 = new Tag('doctrine2');
+        $post->addTag($tag2);
+        
+        $this->assertTrue($post->getTags()->contains($tag1));
+        $this->assertTrue($post->getTags()->contains($tag2));
+        $this->assertEquals(count($post->getTags()), 2);
+    }
+
 }

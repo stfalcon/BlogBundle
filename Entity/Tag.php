@@ -30,6 +30,17 @@ class Tag
     private $text;
 
     /**
+     * Entity constructor
+     *
+     * @param string $text
+     * @return void
+     */
+    public function  __construct($text = null)
+    {
+        $this->text = $text;
+    }
+
+    /**
      * Set Tag id
      *
      * @param int $id

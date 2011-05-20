@@ -20,9 +20,18 @@ class TagEntityTest extends \PHPUnit_Framework_TestCase
     {
         $text = "symfony2";
 
-        $Tag = new Tag();
-        $Tag->setText($text);
+        $tag = new Tag();
+        $tag->setText($text);
 
-        $this->assertEquals($Tag->getText(), $text);
+        $this->assertEquals($tag->getText(), $text);
     }
+    
+    public function testTagConstructor()
+    {
+        $text = "symfony2";
+        $tag = new Tag('symfony2');
+
+        $this->assertEquals($tag->getText(), $text);
+    }
+
 }

@@ -7,6 +7,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
-class BlogBundle extends Bundle
+class StfalconBlogBundle extends Bundle
 {
 }

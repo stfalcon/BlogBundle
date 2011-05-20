@@ -2,6 +2,8 @@
 
 namespace Stfalcon\Bundle\BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Stfalcon\Bundle\BlogBundle\Entity\Post
  *
@@ -37,6 +39,23 @@ class Post
      * @orm:Column(name="text", type="text")
      */
     private $text;
+
+    /**
+     * Tags for post
+     * 
+     * @var ArrayCollection
+     * @orm:ManyToMany(targetEntity="Stfalcon\BlogBundle\Entity\Tag")
+     * @orm:JoinTable(name="posts_tags",
+     *      joinColumns={orm:@JoinColumn(name="post_id", referencedColumnName="id")},
+     *      inverseJoinColumns={orm:@JoinColumn(name="tag_id", referencedColumnName="id")}
+     *      )
+     */
+    private $tags;
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * Set post id
@@ -99,6 +118,27 @@ class Post
     public function setText($text)
     {
         $this->text = $text;
+    }
+
+    /**
+     * Add tag to post
+     *
+     * @param Tag $tag
+     * @return void
+     */
+    public function addTag(Tag $tag)
+    {
+        $this->tags[] = $tag;
+    }
+
+    /**
+     * Get all tags
+     *
+     * @return ArrayCollection
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 
 }
