@@ -21,12 +21,22 @@ class Post
     private $id;
 
     /**
+     * Post title
+     * 
      * @var string $title
-     *
      * @assert:NotBlank()
      * @orm:Column(name="title", type="string", length=255)
      */
     private $title;
+
+    /**
+     * Post text
+     * 
+     * @var text $text
+     * @assert:NotBlank()
+     * @orm:Column(name="text", type="text")
+     */
+    private $text;
 
     /**
      * Set post id
@@ -68,6 +78,27 @@ class Post
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Get post text
+     *
+     * @return null|string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * Set post text
+     *
+     * @param string $text
+     * @return void
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
     }
 
 }
