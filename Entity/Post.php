@@ -3,13 +3,15 @@
 namespace Stfalcon\Bundle\BlogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Stfalcon\Bundle\BlogBundle\Entity\Post
  *
  * @author Stepan Tanasiychuk <ceo@stfalcon.com>
- * @orm:Table(name="blog_posts")
- * @orm:Entity(repositoryClass="Stfalcon\Bundle\BlogBundle\Repository\PostRepository")
+ * @ORM\Table(name="blog_posts")
+ * @ORM\Entity(repositoryClass="Stfalcon\Bundle\BlogBundle\Repository\PostRepository")
  */
 class Post
 {
@@ -17,9 +19,9 @@ class Post
      * Post id
      *
      * @var integer $id
-     * @orm:Column(name="id", type="integer")
-     * @orm:Id
-     * @orm:GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -27,8 +29,8 @@ class Post
      * Post title
      * 
      * @var string $title
-     * @assert:NotBlank()
-     * @orm:Column(name="title", type="string", length=255)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
@@ -36,8 +38,8 @@ class Post
      * Post text
      * 
      * @var text $text
-     * @assert:NotBlank()
-     * @orm:Column(name="text", type="text")
+     * @Assert\NotBlank()
+     * @ORM\Column(name="text", type="text")
      */
     private $text;
 
@@ -45,10 +47,10 @@ class Post
      * Tags for post
      * 
      * @var ArrayCollection
-     * @orm:ManyToMany(targetEntity="Stfalcon\Bundle\BlogBundle\Entity\Tag")
-     * @orm:JoinTable(name="blog_posts_tags",
-     *      joinColumns={@orm:JoinColumn(name="post_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@orm:JoinColumn(name="tag_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="Stfalcon\Bundle\BlogBundle\Entity\Tag")
+     * @ORM\JoinTable(name="blog_posts_tags",
+     *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
      *      )
      */
     private $tags;

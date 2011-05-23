@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Stfalcon\Bundle\BlogBundle\Entity\Post;
 use Stfalcon\Bundle\BlogBundle\Form\Post as PostForm;
@@ -20,8 +23,8 @@ class PostController extends Controller
      * Projects list
      *
      * @return array
-     * @extra:Route("/admin/blog/posts", name="blogPostIndex")
-     * @extra:Template()
+     * @Route("/admin/blog/posts", name="blogPostIndex")
+     * @Template()
      */
     public function indexAction()
     {
@@ -35,8 +38,8 @@ class PostController extends Controller
      * Create new post
      *
      * @return array|RedirectResponse
-     * @extra:Route("/admin/blog/post/create", name="blogPostCreate")
-     * @extra:Template()
+     * @Route("/admin/blog/post/create", name="blogPostCreate")
+     * @Template()
      */
     public function createAction()
     {
@@ -63,8 +66,8 @@ class PostController extends Controller
     /**
      * View post
      *
-     * @extra:Route("/blog/post/{id}", name="blogPostView")
-     * @extra:Template()
+     * @Route("/blog/post/{id}", name="blogPostView")
+     * @Template()
      */
     public function viewAction($id)
     {

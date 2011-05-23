@@ -2,12 +2,15 @@
 
 namespace Stfalcon\Bundle\BlogBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Stfalcon\Bundle\BlogBundle\Entity\Tag
  *
  * @author Stepan Tanasiychuk <ceo@stfalcon.com>
- * @orm:Table(name="blog_tags")
- * @orm:Entity
+ * @ORM\Table(name="blog_tags")
+ * @ORM\Entity
  */
 class Tag
 {
@@ -15,9 +18,9 @@ class Tag
      * Tag id
      *
      * @var integer $id
-     * @orm:Column(name="id", type="integer")
-     * @orm:Id
-     * @orm:GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -25,8 +28,8 @@ class Tag
      * Tag text
      * 
      * @var text $text
-     * @assert:NotBlank()
-     * @orm:Column(name="text", type="string", length=255)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="text", type="string", length=255)
      */
     private $text;
 
