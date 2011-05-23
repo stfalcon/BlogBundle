@@ -1,0 +1,24 @@
+{% extends 'StfalconBlogBundle::layout.html.twig' %}
+
+{% block content %}
+    <h4>Posts</h4>
+
+    {% if posts %}
+        <ul>
+            {% for post in posts %}
+                <li>
+                    <a href="{{ path('blogPostView', { 'id': post.id }) }}">
+                        {{ post.title }}
+                    </a>
+                   {# (<a href="{{ path('portfolioCategoryEdit', { 'slug': category.slug }) }}">Edit Category</a>
+                    / <a href="{{ path('portfolioCategoryDelete', { 'slug': category.slug }) }}">Delete Category</a>)
+                    #}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="info">
+            List of posts is empty
+        </div>
+    {% endif %}
+{% endblock %}

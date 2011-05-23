@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  * @orm:Table(name="blog_posts")
- * @orm:Entity
+ * @orm:Entity(repositoryClass="Stfalcon\Bundle\BlogBundle\Repository\PostRepository")
  */
 class Post
 {
