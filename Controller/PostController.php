@@ -23,7 +23,7 @@ class PostController extends Controller
      * Projects list
      *
      * @return array
-     * @Route("/admin/blog/posts", name="blogPostIndex")
+     * @Route("/admin/blog/posts", name="blog_post_index")
      * @Template()
      */
     public function indexAction()
@@ -38,7 +38,7 @@ class PostController extends Controller
      * Create new post
      *
      * @return array|RedirectResponse
-     * @Route("/admin/blog/post/create", name="blogPostCreate")
+     * @Route("/admin/blog/post/create", name="blog_post_create")
      * @Template()
      */
     public function createAction()
@@ -56,7 +56,7 @@ class PostController extends Controller
 
                 $this->get('request')->getSession()->setFlash('notice',
                         'Congratulations, your post is successfully created!');
-                return new RedirectResponse($this->generateUrl('blogPostIndex'));
+                return new RedirectResponse($this->generateUrl('blog_post_index'));
             }
         }
 
@@ -66,12 +66,12 @@ class PostController extends Controller
     /**
      * View post
      *
-     * @Route("/blog/post/{id}", name="blogPostView")
+     * @Route("/blog/post/{slug}", name="blog_post_view")
      * @Template()
      */
-    public function viewAction($id)
+    public function viewAction($slug)
     {
-        $post = $this->_findPostById($id);
+        $post = $this->_findPostBySlug($slug);
 
 //        $breadcrumbs = $this->get('menu.breadcrumbs');
 //        $breadcrumbs->addChild($category->getName())->setIsCurrent(true);
@@ -85,15 +85,15 @@ class PostController extends Controller
     /**
      * Try find post by id
      *
-     * @param int $id
+     * @param int $slug
      * @return Category
      */
-    private function _findPostById($id)
+    private function _findPostBySlug($slug)
     {
         $em = $this->get('doctrine.orm.entity_manager');
 
         $post = $em->getRepository("StfalconBlogBundle:Post")
-                ->findOneBy(array('id' => $id));
+                ->findOneBy(array('slug' => $slug));
         if (!$post) {
             throw new NotFoundHttpException('The post does not exist.');
         }

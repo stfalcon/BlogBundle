@@ -9,7 +9,7 @@ class PostControllerTest extends WebTestCase
     public function testEmptyPostsList()
     {
         $this->loadFixtures(array());
-        $crawler = $this->fetchCrawler($this->getUrl('blogPostIndex', array()), 'GET', true, true);
+        $crawler = $this->fetchCrawler($this->getUrl('blog_post_index', array()), 'GET', true, true);
 
         // check display notice
         $this->assertEquals(1, $crawler->filter('html:contains("List of posts is empty")')->count());
@@ -21,7 +21,7 @@ class PostControllerTest extends WebTestCase
     {
         $this->loadFixtures(array());
         $client = $this->makeClient(true);
-        $crawler = $client->request('GET', $this->getUrl('blogPostCreate', array()));
+        $crawler = $client->request('GET', $this->getUrl('blog_post_create', array()));
 
         $form = $crawler->selectButton('Send')->form();
 
@@ -32,7 +32,7 @@ class PostControllerTest extends WebTestCase
 
         // check redirect to list of post
         $this->assertTrue($client->getResponse()->isRedirect());
-        $this->assertTrue($client->getResponse()->isRedirected($this->getUrl('blogPostIndex', array())));
+        $this->assertTrue($client->getResponse()->isRedirected($this->getUrl('blog_post_index', array())));
 
         $crawler = $client->followRedirect();
 
@@ -47,7 +47,7 @@ class PostControllerTest extends WebTestCase
     public function testPostList()
     {
         $this->loadFixtures(array('Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
-        $crawler = $this->fetchCrawler($this->getUrl('blogPostIndex', array()), 'GET', true, true);
+        $crawler = $this->fetchCrawler($this->getUrl('blog_post_index', array()), 'GET', true, true);
 
         // check display categories list
         $this->assertEquals(1, $crawler->filter('ul li:contains("My first post")')->count());
@@ -56,7 +56,7 @@ class PostControllerTest extends WebTestCase
     public function testViewPost()
     {
         $this->loadFixtures(array('Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
-        $crawler = $this->fetchCrawler($this->getUrl('blogPostView', array('id' => 1)), 'GET', true, true);
+        $crawler = $this->fetchCrawler($this->getUrl('blog_post_view', array('slug' => 'my-first-post')), 'GET', true, true);
 
 //        // check display categories list
 //        $this->assertEquals(1, $crawler->filter('ul li:contains("My first post")')->count());

@@ -7,7 +7,7 @@
         <ul>
             {% for post in posts %}
                 <li>
-                    <a href="{{ path('blogPostView', { 'id': post.id }) }}">
+                    <a href="{{ path('blog_post_view', { 'slug': post.slug }) }}">
                         {{ post.title }}
                     </a>
                    {# (<a href="{{ path('portfolioCategoryEdit', { 'slug': category.slug }) }}">Edit Category</a>
