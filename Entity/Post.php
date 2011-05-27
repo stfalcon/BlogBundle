@@ -35,6 +35,15 @@ class Post
     private $title;
 
     /**
+     * @var string $slug
+     *
+     * @Assert\NotBlank()
+     * @Assert\MinLength(3)
+     * @ORM\Column(name="slug", type="string", length=128, unique=true)
+     */
+    private $slug;
+
+    /**
      * Post text
      * 
      * @var text $text
@@ -100,6 +109,26 @@ class Post
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Get post slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set post slug
+     *
+     * @param string $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
     }
 
     /**

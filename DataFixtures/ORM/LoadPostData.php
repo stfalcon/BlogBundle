@@ -13,6 +13,7 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
         // posts
         $firstpost = new Post();
         $firstpost->setTitle('My first post');
+        $firstpost->setSlug('my-first-post');
         $firstpost->setText('In work we use Symfony2.');
         
         $em->persist($firstpost);

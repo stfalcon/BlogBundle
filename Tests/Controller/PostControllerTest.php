@@ -26,6 +26,7 @@ class PostControllerTest extends WebTestCase
         $form = $crawler->selectButton('Send')->form();
 
         $form['post[title]'] = 'Post title';
+        $form['post[slug]'] = 'post-slug';
         $form['post[text]'] = 'Post text';
         $crawler = $client->submit($form);
 

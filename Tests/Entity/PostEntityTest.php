@@ -17,6 +17,7 @@ class PostEntityTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($post->getId());
         $this->assertNull($post->getTitle());
         $this->assertNull($post->getText());
+        $this->assertNull($post->getSlug());
         $this->assertTrue(is_a($post->getTags(), 'Doctrine\Common\Collections\ArrayCollection'));
         $this->assertEquals(count($post->getTags()), 0);
     }
@@ -29,6 +30,16 @@ class PostEntityTest extends \PHPUnit_Framework_TestCase
         $post->setTitle($title);
 
         $this->assertEquals($post->getTitle(), $title);
+    }
+
+    public function testSetAndGetPostTag()
+    {
+        $slug = "valid-slug";
+
+        $post = new Post();
+        $post->setSlug($slug);
+
+        $this->assertEquals($post->getSlug(), $slug);
     }
 
     public function testSetAndGetPostText()
