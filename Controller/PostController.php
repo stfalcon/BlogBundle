@@ -73,14 +73,45 @@ class PostController extends Controller
     {
         $post = $this->_findPostBySlug($slug);
 
-//        $breadcrumbs = $this->get('menu.breadcrumbs');
-//        $breadcrumbs->addChild($category->getName())->setIsCurrent(true);
+        $breadcrumbs = $this->get('menu.breadcrumbs');
+        $breadcrumbs->addChild('Блог', $this->get('router')->generate('blog_post_index'));
+        $breadcrumbs->addChild($post->getTitle())->setIsCurrent(true);
 
         return array(
             'post' => $post,
         );
     }
 
+    /**
+     * Edit post
+     *
+     * @Route("/admin/blog/post/edit/{slug}", name="blog_post_edit")
+     * @Template()
+     */
+    public function editAction($slug)
+    {
+        $post = $this->_findPostBySlug($slug);
+        $form = $this->get('form.factory')->create(new PostForm(), $post);
+
+
+        $request = $this->get('request');
+        if ($request->getMethod() == 'POST') {
+            $form->bindRequest($request);
+
+            if ($form->isValid()) {
+                // save project
+                $em = $this->get('doctrine')->getEntityManager();
+                $em->persist($post);
+                $em->flush();
+
+                $this->get('request')->getSession()->setFlash('notice',
+                        'Congratulations, your post is successfully updated!');
+                return new RedirectResponse($this->generateUrl('blog_post_index'));
+            }
+        }
+
+        return array('form' => $form->createView(), 'post' => $post);
+    }
 
     /**
      * Try find post by id

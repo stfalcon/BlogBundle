@@ -10,8 +10,8 @@
                     <a href="{{ path('blog_post_view', { 'slug': post.slug }) }}">
                         {{ post.title }}
                     </a>
-                   {# (<a href="{{ path('portfolioCategoryEdit', { 'slug': category.slug }) }}">Edit Category</a>
-                    / <a href="{{ path('portfolioCategoryDelete', { 'slug': category.slug }) }}">Delete Category</a>)
+                    (<a href="{{ path('blog_post_edit', { 'slug': post.slug }) }}">Edit Post</a>
+                   {# / <a href="{{ path('portfolioCategoryDelete', { 'slug': category.slug }) }}">Delete Category</a>)
                     #}
                 </li>
             {% endfor %}

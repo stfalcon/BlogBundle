@@ -1,7 +1,11 @@
-<h3>
-    {{ post.title }}
-</h3>
+{% extends 'StfalconBlogBundle::internal.html.twig' %}
 
-<p>
-    {{ post.text }}
-</p>
+{% block content %}
+    <h1>
+        {{ post.title }}
+    </h1>
+
+    <p>
+        {{ post.text }}
+    </p>
+{% endblock %}
