@@ -50,6 +50,9 @@ class PostEntityTest extends \PHPUnit_Framework_TestCase
         $post->setText($text);
 
         $this->assertEquals($post->getText(), $text);
+
+        $post->setText("first line" . PHP_EOL . "second line");
+        $this->assertEquals($post->getText(), "first line<br />" . PHP_EOL . "second line");
     }
 
     public function testAddTagToPostAndGetTags()

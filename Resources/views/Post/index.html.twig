@@ -1,24 +1,44 @@
-{% extends 'StfalconBlogBundle::layout.html.twig' %}
+{% extends 'StfalconBlogBundle::internal.html.twig' %}
 
 {% block content %}
-    <h4>Posts</h4>
-
     {% if posts %}
         <ul>
             {% for post in posts %}
                 <li>
-                    <a href="{{ path('blog_post_view', { 'slug': post.slug }) }}">
-                        {{ post.title }}
-                    </a>
-                    (<a href="{{ path('blog_post_edit', { 'slug': post.slug }) }}">Edit Post</a>
-                   {# / <a href="{{ path('portfolioCategoryDelete', { 'slug': category.slug }) }}">Delete Category</a>)
-                    #}
+                    <h3>
+                        <a href="{{ path('blog_post_view', { 'slug': post.slug }) }}">{{ post.title }}</a>
+                    </h3>
+                    
+                    <p>
+                        {{ post.text|raw }}
+                        <br />
+                        <a href="{{ path('blog_post_view', { 'slug': post.slug }) }}#more">
+                            Читать далее →
+                        </a>
+                    </p>
+
+                    <ul class="tags">
+                        <li><a href="#">офис</a>,</li>
+                        <li><a href="#">место работы</a>,</li>
+                        <li><a href="#">переезд</a></li>
+                    </ul>
+
+                    <div class="post-info">
+                        <ul>
+                            <!--<li class="author">
+                                Степан Танасийчук
+                            </li>-->
+                            <li class="datetime">
+                                28 мая 2011, 23:52
+                            </li>
+                            <!--<li class="comments">
+                                Нет комментариев
+                            </li>-->
+                        </ul>
+                        <div></div>
+                    </div>
                 </li>
             {% endfor %}
         </ul>
-    {% else %}
-        <div class="info">
-            List of posts is empty
-        </div>
     {% endif %}
 {% endblock %}

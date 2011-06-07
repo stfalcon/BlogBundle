@@ -20,13 +20,31 @@ class PostController extends Controller
 {
 
     /**
+     * List of posts for admin
+     *
+     * @Route("/{_locale}/blog", name="blog",
+     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
+     * @Template()
+     */
+    public function indexAction()
+    {
+        $posts = $this->get('doctrine')->getEntityManager()
+                ->getRepository("StfalconBlogBundle:Post")->getAllPosts();
+
+        $breadcrumbs = $this->get('menu.breadcrumbs');
+        $breadcrumbs->addChild('Блог')->setIsCurrent(true);
+
+        return array('posts' => $posts);
+    }
+
+    /**
      * Projects list
      *
      * @return array
      * @Route("/admin/blog/posts", name="blog_post_index")
      * @Template()
      */
-    public function indexAction()
+    public function listAction()
     {
         $posts = $this->get('doctrine')->getEntityManager()
                 ->getRepository("StfalconBlogBundle:Post")->getAllPosts();
@@ -66,7 +84,8 @@ class PostController extends Controller
     /**
      * View post
      *
-     * @Route("/blog/post/{slug}", name="blog_post_view")
+     * @Route("/{_locale}/blog/post/{slug}", name="blog_post_view",
+     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
      * @Template()
      */
     public function viewAction($slug)
@@ -74,7 +93,7 @@ class PostController extends Controller
         $post = $this->_findPostBySlug($slug);
 
         $breadcrumbs = $this->get('menu.breadcrumbs');
-        $breadcrumbs->addChild('Блог', $this->get('router')->generate('blog_post_index'));
+        $breadcrumbs->addChild('Блог', $this->get('router')->generate('blog'));
         $breadcrumbs->addChild($post->getTitle())->setIsCurrent(true);
 
         return array(
@@ -111,6 +130,25 @@ class PostController extends Controller
         }
 
         return array('form' => $form->createView(), 'post' => $post);
+    }
+
+    /**
+     * Delete post
+     *
+     * @param string $slug
+     * @return RedirectResponse
+     * @Route("/admin/blog/post/delete/{slug}", name="blog_post_delete")
+     */
+    public function deleteAction($slug)
+    {
+        $post = $this->_findPostBySlug($slug);
+
+        $em = $this->get('doctrine')->getEntityManager();
+        $em->remove($post);
+        $em->flush();
+
+        $this->get('request')->getSession()->setFlash('notice', 'Your post is successfully delete.');
+        return new RedirectResponse($this->generateUrl('blog_post_index'));
     }
 
     /**

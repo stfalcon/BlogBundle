@@ -138,7 +138,7 @@ class Post
      */
     public function getText()
     {
-        return $this->text;
+        return $this->text ? nl2br($this->text, true) : $this->text;
     }
 
     /**

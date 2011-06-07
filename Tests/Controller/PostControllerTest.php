@@ -6,7 +6,7 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class PostControllerTest extends WebTestCase
 {
-    public function testEmptyPostsList()
+    public function testEmptyPostsListForAdmin()
     {
         $this->loadFixtures(array());
         $crawler = $this->fetchCrawler($this->getUrl('blog_post_index', array()), 'GET', true, true);
@@ -44,7 +44,7 @@ class PostControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('ul li:contains("Post title")')->count());
     }
 
-    public function testPostList()
+    public function testNotEmptyPostListForAdmin()
     {
         $this->loadFixtures(array('Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
         $crawler = $this->fetchCrawler($this->getUrl('blog_post_index', array()), 'GET', true, true);
@@ -87,6 +87,19 @@ class PostControllerTest extends WebTestCase
         $this->assertFalse($client->getResponse()->isRedirect());
 
         $this->assertEquals(1, $crawler->filter('ul li:contains("New post title")')->count());
+    }
 
+    public function testDeletePost()
+    {
+        $this->loadFixtures(array('Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
+        $client = $this->makeClient(true);
+        // delete post
+        $crawler = $client->request('GET', $this->getUrl('blog_post_delete', array('slug' => 'my-first-post')));
+    }
+
+    public function testPostListForUser()
+    {
+        $this->loadFixtures(array('Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
+        $crawler = $this->fetchCrawler($this->getUrl('blog', array()), 'GET', true, true);
     }
 }
