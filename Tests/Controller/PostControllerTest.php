@@ -58,9 +58,12 @@ class PostControllerTest extends WebTestCase
         $this->loadFixtures(array('Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
         $crawler = $this->fetchCrawler($this->getUrl('blog_post_view', array('slug' => 'my-first-post')), 'GET', true, true);
 
-        // check display post
+        // check display post title
         $this->assertEquals(1, $crawler->filter('h3:contains("My first post")')->count());
+        // check display post text
         $this->assertEquals(1, $crawler->filter('p:contains("In work we use Symfony2.")')->count());
+        // and find <span id="more">
+        $this->assertEquals(1, $crawler->filter('span#more')->count());
     }
 
     public function testEditPost()
@@ -101,5 +104,11 @@ class PostControllerTest extends WebTestCase
     {
         $this->loadFixtures(array('Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
         $crawler = $this->fetchCrawler($this->getUrl('blog', array()), 'GET', true, true);
+
+        // проверить количество постов
+        // проверить наличие/отсутствие тега read more
+        // проверить ссылку на more
+        // проверить наличие тегов
+        // проверить ссылку на комменты
     }
 }

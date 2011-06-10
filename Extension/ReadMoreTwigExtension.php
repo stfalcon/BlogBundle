@@ -5,10 +5,13 @@ namespace Stfalcon\Bundle\BlogBundle\Extension;
 class ReadMoreTwigExtension extends \Twig_Extension
 {
 
+    public static $separator = '<!--more-->';
+
     public function getFilters()
     {
         return array(
             'cutMore' => new \Twig_Filter_Method($this, 'cutMore'),
+            'moreToSpan' => new \Twig_Filter_Method($this, 'moreToSpan'),
         );
     }
 
@@ -28,12 +31,11 @@ class ReadMoreTwigExtension extends \Twig_Extension
      * Cut text before "more" tag
      *
      * @param string $value
-     * @param string $separator
      * @return string
      */
-    public function cutMore($value, $separator = '<!--more-->')
+    public function cutMore($value)
     {
-        $posMore = ((int) strpos($value, $separator));
+        $posMore = ((int) strpos($value, self::$separator));
         if ($posMore) {
             return substr($value, 0, $posMore);
         }
@@ -44,12 +46,16 @@ class ReadMoreTwigExtension extends \Twig_Extension
      * Check or text has "more" tag
      *
      * @param string $value
-     * @param string $separator
      * @return boolean
      */
-    public function hasMore($value, $separator = '<!--more-->')
+    public function hasMore($value)
     {
-        return (bool) substr($value, 0, (int) strpos($value, $separator));
+        return (bool) substr($value, 0, (int) strpos($value, self::$separator));
+    }
+
+    public function moreToSpan($value)
+    {
+        return str_replace(self::$separator, '<span id="more"></span>', $value);
     }
 
 }

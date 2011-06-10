@@ -11,12 +11,12 @@
                         </h3>
 
                         <p>
-                            {{ post.text|cutMore|raw|nl2br }}
+                            {{ post.text|cutMore|raw|nl2br}}
 
                             {% if hasMore(post.text) %}
                                 <br />
                                 <a href="{{ path('blog_post_view', { 'slug': post.slug }) }}#more">
-                                    Читать далее →
+                                    {{ 'Читать далее'|trans }} →
                                 </a>
                             {% endif %}
                         </p>
@@ -35,7 +35,7 @@
                                 <a href="http://blog.stfalcon.com">Степан Танасийчук</a>,
                             </li>
                             <li class="comments">
-                                <a href="{{ path('blog_post_view', { 'slug': post.slug }) }}#comments">Комментировать</a>
+                                <a href="{{ path('blog_post_view', { 'slug': post.slug }) }}#disqus_thread">{{ 'Комментировать'|trans }}</a>
                             </li>
                         </ul>
                     </div>
