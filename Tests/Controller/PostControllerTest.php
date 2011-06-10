@@ -59,7 +59,7 @@ class PostControllerTest extends WebTestCase
         $crawler = $this->fetchCrawler($this->getUrl('blog_post_view', array('slug' => 'my-first-post')), 'GET', true, true);
 
         // check display post
-        $this->assertEquals(1, $crawler->filter('h1:contains("My first post")')->count());
+        $this->assertEquals(1, $crawler->filter('h3:contains("My first post")')->count());
         $this->assertEquals(1, $crawler->filter('p:contains("In work we use Symfony2.")')->count());
     }
 

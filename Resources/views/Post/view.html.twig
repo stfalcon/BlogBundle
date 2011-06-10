@@ -1,11 +1,28 @@
 {% extends 'StfalconBlogBundle::internal.html.twig' %}
 
 {% block content %}
-    <h1>
-        {{ post.title }}
-    </h1>
+    <div class="post">
+        <h3>
+            {{ post.title }}
+        </h3>
 
-    <p>
-        {{ post.text|raw }}
-    </p>
+        <p>
+            {{ post.text|raw }}
+        </p>
+
+        <ul class="tags">
+            <li><a href="#">офис</a>,</li>
+            <li><a href="#">место работы</a>,</li>
+            <li><a href="#">переезд</a></li>
+        </ul>
+
+        <ul class="info">
+            <li class="datetime">
+                28 мая 2011
+            </li>
+            <li class="author">
+                <a href="http://blog.stfalcon.com">Степан Танасийчук</a>,
+            </li>
+        </ul>
+    </div>
 {% endblock %}
