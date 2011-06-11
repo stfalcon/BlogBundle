@@ -14,7 +14,6 @@
                             {{ post.textAsHtml|cutMore|raw }}
 
                             {% if hasMore(post.text) %}
-                                <br />
                                 <a href="{{ path('blog_post_view', { 'slug': post.slug }) }}#more">
                                     {{ 'Читать далее'|trans }} →
                                 </a>
