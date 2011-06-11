@@ -11,7 +11,7 @@
                         </h3>
 
                         <p>
-                            {{ post.text|cutMore|raw|nl2br}}
+                            {{ post.textAsHtml|cutMore|raw }}
 
                             {% if hasMore(post.text) %}
                                 <br />

@@ -53,6 +53,14 @@ class Post
     private $text;
 
     /**
+     * Post text as HTML code
+     *
+     * @var text $textAsHtml
+     * @ORM\Column(name="text_as_html", type="text")
+     */
+    private $textAsHtml;
+
+    /**
      * Tags for post
      * 
      * @var ArrayCollection
@@ -150,6 +158,35 @@ class Post
     public function setText($text)
     {
         $this->text = $text;
+        $this->setTextAsHtml($text);
+    }
+
+    private function setTextAsHtml($text)
+    {
+        // update text html code
+        require_once __DIR__ . '/../Resources/vendor/geshi/geshi.php';
+
+        $text = preg_replace_callback(
+                    '/<pre lang="(.*?)">\r?\n?(.*?)\r?\n?\<\/pre>/is',
+                    /**
+                     * @param string $data
+                     * @return string
+                     */
+                    function($data) {
+                        $geshi = new \GeSHi($data[2], $data[1]);
+                        return $geshi->parse_code();
+                    }, $text);
+
+        $this->textAsHtml = $text;
+    }
+
+    /**
+     * Get post text as HTML code
+     * @return string
+     */
+    public function getTextAsHtml()
+    {
+        return $this->textAsHtml;
     }
 
     /**

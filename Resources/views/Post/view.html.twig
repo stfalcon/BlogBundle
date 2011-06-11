@@ -2,13 +2,11 @@
 
 {% block content %}
     <div class="post">
-        <h3>
+        <h1>
             {{ post.title }}
-        </h3>
+        </h1>
 
-        <p>
-            {{ post.text|moreToSpan|raw|nl2br }}
-        </p>
+        {{ post.textAsHtml|raw }}
 
         <ul class="tags">
             <li><a href="#">офис</a>,</li>
@@ -25,7 +23,7 @@
             </li>
         </ul>
 
-        <div id="disqus_thread"></div>
+        {#<div id="disqus_thread"></div>
         <script type="text/javascript">
             var disqus_shortname = 'stfalcon-studio'; // required: replace example with your forum shortname
 
@@ -39,6 +37,6 @@
                 dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
                 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
             })();
-        </script>
+        </script>#}
     </div>
 {% endblock %}

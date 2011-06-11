@@ -121,6 +121,7 @@ class PostController extends Controller
                 // save project
                 $em = $this->get('doctrine')->getEntityManager();
                 $em->persist($post);
+
                 $em->flush();
 
                 $this->get('request')->getSession()->setFlash('notice',
