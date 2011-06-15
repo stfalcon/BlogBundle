@@ -31,8 +31,8 @@ class PostControllerTest extends WebTestCase
         $crawler = $client->submit($form);
 
         // check redirect to list of post
-        $this->assertTrue($client->getResponse()->isRedirect());
-        $this->assertTrue($client->getResponse()->isRedirected($this->getUrl('blog_post_index', array())));
+//        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('blog_post_index', array())));
 
         $crawler = $client->followRedirect();
 
@@ -61,7 +61,7 @@ class PostControllerTest extends WebTestCase
         // check display post title
         $this->assertEquals(1, $crawler->filter('h1:contains("My first post")')->count());
         // check display post text
-        $this->assertEquals(1, $crawler->filter('p:contains("In work we use Symfony2.")')->count());
+        $this->assertEquals(1, $crawler->filter('div.post:contains("In work we use Symfony2.")')->count());
         // and find <span id="more">
         $this->assertEquals(1, $crawler->filter('span#more')->count());
     }
@@ -80,8 +80,8 @@ class PostControllerTest extends WebTestCase
         $crawler = $client->submit($form);
 
         // check redirect to list of categories
-        $this->assertTrue($client->getResponse()->isRedirect());
-        $this->assertTrue($client->getResponse()->isRedirected($this->getUrl('blog_post_index', array())));
+//        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('blog_post_index', array())));
 
         $crawler = $client->followRedirect();
 

@@ -6,7 +6,7 @@
             {{ post.title }}
         </h1>
 
-        {{ post.textAsHtml|raw }}
+        {{ post.textAsHtml|moreToSpan|raw }}
 
         <ul class="tags">
             <li><a href="#">офис</a>,</li>
