@@ -6,6 +6,7 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class PostControllerTest extends WebTestCase
 {
+
     public function testEmptyPostsListForAdmin()
     {
         $this->loadFixtures(array());
@@ -31,7 +32,6 @@ class PostControllerTest extends WebTestCase
         $crawler = $client->submit($form);
 
         // check redirect to list of post
-//        $this->assertTrue($client->getResponse()->isRedirect());
         $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('blog_post_index', array())));
 
         $crawler = $client->followRedirect();
@@ -46,7 +46,9 @@ class PostControllerTest extends WebTestCase
 
     public function testNotEmptyPostListForAdmin()
     {
-        $this->loadFixtures(array('Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
+        $this->loadFixtures(array(
+                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadTagData',
+                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
         $crawler = $this->fetchCrawler($this->getUrl('blog_post_index', array()), 'GET', true, true);
 
         // check display posts list
@@ -55,7 +57,9 @@ class PostControllerTest extends WebTestCase
 
     public function testViewPost()
     {
-        $this->loadFixtures(array('Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
+        $this->loadFixtures(array(
+                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadTagData',
+                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
         $crawler = $this->fetchCrawler($this->getUrl('blog_post_view', array('slug' => 'my-first-post')), 'GET', true, true);
 
         // check display post title
@@ -66,9 +70,19 @@ class PostControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('span#more')->count());
     }
 
+    public function testViewNotExistPost()
+    {
+        $client = $this->makeClient();
+        $crawler = $client->request('GET', $this->getUrl('blog_post_view', array('slug' => 'not-exist-post')));
+
+        $this->assertTrue($client->getResponse()->isNotFound());
+    }
+
     public function testEditPost()
     {
-        $this->loadFixtures(array('Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
+        $this->loadFixtures(array(
+                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadTagData',
+                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
         $client = $this->makeClient(true);
         $crawler = $client->request('GET', $this->getUrl('blog_post_edit', array('slug' => 'my-first-post')));
 
@@ -77,10 +91,10 @@ class PostControllerTest extends WebTestCase
         $form['post[title]'] = 'New post title';
         $form['post[slug]'] = 'new-post-slug';
         $form['post[text]'] = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..';
+        $form['post[tags]'] = 'php, symfony2, etc';
         $crawler = $client->submit($form);
 
         // check redirect to list of categories
-//        $this->assertTrue($client->getResponse()->isRedirect());
         $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('blog_post_index', array())));
 
         $crawler = $client->followRedirect();
@@ -94,7 +108,9 @@ class PostControllerTest extends WebTestCase
 
     public function testDeletePost()
     {
-        $this->loadFixtures(array('Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
+        $this->loadFixtures(array(
+                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadTagData',
+                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
         $client = $this->makeClient(true);
         // delete post
         $crawler = $client->request('GET', $this->getUrl('blog_post_delete', array('slug' => 'my-first-post')));
@@ -102,13 +118,36 @@ class PostControllerTest extends WebTestCase
 
     public function testPostListForUser()
     {
-        $this->loadFixtures(array('Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
+        $this->loadFixtures(array(
+                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadTagData',
+                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
         $crawler = $this->fetchCrawler($this->getUrl('blog', array()), 'GET', true, true);
 
-        // проверить количество постов
-        // проверить наличие/отсутствие тега read more
-        // проверить ссылку на more
-        // проверить наличие тегов
-        // проверить ссылку на комменты
+        // check post count
+        $this->assertEquals(2, $crawler->filter('div.post')->count());
+
+        $firstUrl = $this->getUrl('blog_post_view', array('slug' => 'my-first-post'));
+        $secondUrl = $this->getUrl('blog_post_view', array('slug' => 'post-about-php'));
+
+        // check links to posts
+        $this->assertEquals(1, $crawler->filter('div.post h3 a[href="' . $firstUrl . '"]')->count());
+        $this->assertEquals(1, $crawler->filter('div.post h3 a[href="' . $secondUrl . '"]')->count());
+
+        // check exist read more tag
+        $this->assertEquals(0, $crawler->filter('div.post:contains("<!--more-->")')->count());
+
+        // check link to read more
+        $this->assertEquals(1, $crawler->filter('div.post a[href="' . $firstUrl . '#more"]')->count());
+        $this->assertEquals(0, $crawler->filter('div.post a[href="' . $secondUrl . '#more"]')->count());
+
+        // check exist posts tags
+        $this->assertEquals(1, $crawler->filter('div.post ul.tags:contains("php")')->count());
+        $this->assertEquals(1, $crawler->filter('div.post ul.tags:contains("symfony2")')->count());
+        $this->assertEquals(1, $crawler->filter('div.post ul.tags:contains("doctrine2")')->count());
+
+        // check links to posts commets
+        $this->assertEquals(1, $crawler->filter('div.post a[href="' . $firstUrl . '#disqus_thread"]')->count());
+        $this->assertEquals(1, $crawler->filter('div.post a[href="' . $secondUrl . '#disqus_thread"]')->count());
+
     }
 }

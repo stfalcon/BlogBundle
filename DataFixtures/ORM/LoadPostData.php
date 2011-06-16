@@ -11,19 +11,29 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
     public function load($em)
     {
         // posts
-        $firstpost = new Post();
-        $firstpost->setTitle('My first post');
-        $firstpost->setSlug('my-first-post');
-        $firstpost->setText('In work we use Symfony2.<!--more-->And text after cut');
-        
-        $em->persist($firstpost);
+        $postfirst = new Post();
+        $postfirst->setTitle('My first post');
+        $postfirst->setSlug('my-first-post');
+        $postfirst->setText('In work we use Symfony2.<!--more-->And text after cut');
+        $postfirst->addTag($em->merge($this->getReference('tag-symfony2')));
+        $postfirst->addTag($em->merge($this->getReference('tag-doctrine2')));
+        $em->persist($postfirst);
+
+        $postaboutphp = new Post();
+        $postaboutphp->setTitle('Post about php');
+        $postaboutphp->setSlug('post-about-php');
+        $postaboutphp->setText('The PHP development team would like to announce the immediate availability of PHP 5.3.6.');
+        $postaboutphp->addTag($em->merge($this->getReference('tag-php')));
+        $em->persist($postaboutphp);
+
         $em->flush();
 
-        $this->addReference('post-first', $firstpost);
+        $this->addReference('post-first', $postfirst);
+        $this->addReference('post-about-php', $postaboutphp);
     }
 
     public function getOrder()
     {
-        return 1; // the order in which fixtures will be loaded
+        return 2; // the order in which fixtures will be loaded
     }
 }

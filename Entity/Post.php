@@ -64,6 +64,7 @@ class Post
      * Tags for post
      * 
      * @var ArrayCollection
+     * @Assert\NotBlank()
      * @ORM\ManyToMany(targetEntity="Stfalcon\Bundle\BlogBundle\Entity\Tag")
      * @ORM\JoinTable(name="blog_posts_tags",
      *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
