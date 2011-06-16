@@ -8,13 +8,14 @@ use Symfony\Component\Form\FormBuilder;
 /**
  * Post form
  */
-class Post extends AbstractType
+class PostForm extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder->add('title')
                 ->add('slug')
-                ->add('text');
+                ->add('text')
+                ->add('tags', 'tags');
     }
 
     public function getDefaultOptions(array $options)

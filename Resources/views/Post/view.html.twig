@@ -9,9 +9,11 @@
         {{ post.textAsHtml|moreToSpan|raw }}
 
         <ul class="tags">
-            <li><a href="#">офис</a>,</li>
-            <li><a href="#">место работы</a>,</li>
-            <li><a href="#">переезд</a></li>
+            {% for tag in post.tags %}
+                <li>
+                    <a href="{{ path('blog_tag_view', { 'slug': tag.text }) }}">{{ tag.text }}</a>{% if not loop.last %}, {% endif %}
+                </li>
+            {% endfor %}
         </ul>
 
         <ul class="info">

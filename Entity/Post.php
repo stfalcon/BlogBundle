@@ -200,6 +200,11 @@ class Post
         $this->tags[] = $tag;
     }
 
+    public function setTags(\Doctrine\Common\Collections\Collection $tags)
+    {
+        $this->tags = $tags;
+    }
+
     /**
      * Get all tags
      *

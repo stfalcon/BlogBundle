@@ -11,10 +11,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Stfalcon\Bundle\BlogBundle\Entity\Post;
-use Stfalcon\Bundle\BlogBundle\Form\Post as PostForm;
+use Stfalcon\Bundle\BlogBundle\Form\PostForm;
 
 /**
- * ProjectController
+ * PostController
  */
 class PostController extends Controller
 {
@@ -153,7 +153,7 @@ class PostController extends Controller
     }
 
     /**
-     * Try find post by id
+     * Try find post by slug
      *
      * @param int $slug
      * @return Category

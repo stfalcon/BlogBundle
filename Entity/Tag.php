@@ -2,6 +2,7 @@
 
 namespace Stfalcon\Bundle\BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -34,6 +35,13 @@ class Tag
     private $text;
 
     /**
+     * @var Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Stfalcon\Bundle\BlogBundle\Entity\Post", mappedBy="tags")
+     */
+    private $posts;
+
+    /**
      * Entity constructor
      *
      * @param string $text
@@ -42,6 +50,7 @@ class Tag
     public function  __construct($text = null)
     {
         $this->text = $text;
+        $this->posts = new ArrayCollection();
     }
 
     /**
@@ -84,6 +93,11 @@ class Tag
     public function setText($text)
     {
         $this->text = $text;
+    }
+
+    public function getPosts()
+    {
+        return $this->posts;
     }
 
 }

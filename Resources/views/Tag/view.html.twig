@@ -1,9 +1,9 @@
 {% extends 'StfalconBlogBundle::internal.html.twig' %}
 
 {% block content %}
-    {% if posts %}
+    {% if tag.posts %}
         <ul>
-            {% for post in posts %}
+            {% for post in tag.posts %}
                 <li>
                     <div class="post">
                         <h3>
