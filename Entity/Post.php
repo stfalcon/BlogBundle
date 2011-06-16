@@ -5,6 +5,7 @@ namespace Stfalcon\Bundle\BlogBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Stfalcon\Bundle\BlogBundle\Entity\Post
@@ -72,6 +73,22 @@ class Post
      *      )
      */
     private $tags;
+
+    /**
+     * @var \DateTime $created
+     *
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    private $created;
+
+    /**
+     * @var \DateTime $updated
+     *
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updated;
 
     public function __construct()
     {
@@ -214,6 +231,26 @@ class Post
     public function getTags()
     {
         return $this->tags;
+    }
+
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    }
+
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
     }
 
 }

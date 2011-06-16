@@ -63,11 +63,15 @@ class PostControllerTest extends WebTestCase
         $crawler = $this->fetchCrawler($this->getUrl('blog_post_view', array('slug' => 'my-first-post')), 'GET', true, true);
 
         // check display post title
-        $this->assertEquals(1, $crawler->filter('h1:contains("My first post")')->count());
+        $this->assertEquals(1, $crawler->filter('div.post h1:contains("My first post")')->count());
         // check display post text
         $this->assertEquals(1, $crawler->filter('div.post:contains("In work we use Symfony2.")')->count());
         // and find <span id="more">
-        $this->assertEquals(1, $crawler->filter('span#more')->count());
+        $this->assertEquals(1, $crawler->filter('div.post span#more')->count());
+
+        // check post tags
+        $this->assertEquals(1, $crawler->filter('div.post ul.tags:contains("symfony2")')->count());
+        $this->assertEquals(1, $crawler->filter('div.post ul.tags:contains("doctrine2")')->count());
     }
 
     public function testViewNotExistPost()

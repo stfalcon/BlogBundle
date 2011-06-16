@@ -170,4 +170,33 @@ class PostController extends Controller
 
         return $post;
     }
+
+    /**
+     * RSS feed
+     *
+     * @Route("/{_locale}/blog/rss", name="blog_rss",
+     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
+     */
+    public function rssAction()
+    {
+        $feed = new \Zend\Feed\Writer\Feed();
+
+        $config = $this->container->getParameter('stfalcon_blog.config');
+        
+        $feed->setTitle($config['rss']['title']);
+        $feed->setDescription($config['rss']['description']);
+        $feed->setLink($this->generateUrl('blog_rss', array(), true));
+
+        $posts = $this->get('doctrine')->getEntityManager()
+                ->getRepository("StfalconBlogBundle:Post")->getAllPosts();
+        foreach($posts as $post) {
+            $entry = new \Zend\Feed\Writer\Entry();
+            $entry->setTitle($post->getTitle());
+            $entry->setLink($this->generateUrl('blog_post_view', array('slug' => $post->getSlug()), true));
+            
+            $feed->addEntry($entry);
+        }
+
+        return new Response($feed->export('rss'));
+    }
 }

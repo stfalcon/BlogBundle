@@ -9,7 +9,14 @@ use Symfony\Component\Config\FileLocator;
 
 class StfalconBlogExtension extends Extension {
 
-    public function load(array $config, ContainerBuilder $container) {
+    public function load(array $configs, ContainerBuilder $container) {
+        $config = array();
+        foreach($configs as $c) {
+            $config = array_merge($config, $c);
+        }
+
+        $container->setParameter('stfalcon_blog.config', $config);
+        
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('service.xml');
     }
