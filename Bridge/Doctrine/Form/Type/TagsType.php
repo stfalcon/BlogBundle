@@ -19,14 +19,9 @@ class TagsType extends AbstractType
 
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->prependClientTransformer(new EntitiesToStringTransformer($this->registry->getEntityManager()));
+        $builder->prependClientTransformer(
+                new EntitiesToStringTransformer($this->registry->getEntityManager()));
     }
-
-//        function getDefaultOptions(array $options)
-////    public function getDefaultOptions(array $options)
-//    {
-//        var_dump($options);
-//    }
 
     public function getParent(array $options)
     {

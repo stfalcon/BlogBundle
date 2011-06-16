@@ -17,11 +17,10 @@ class EntitiesToStringTransformer implements DataTransformerInterface
     }
 
     /**
-     * Transforms entities into choice keys
+     * Transforms tags entities into string (separated by comma)
      *
-     * @param Collection|object $collection A collection of entities, a single entity or
-     *                                      NULL
-     * @return mixed An array of choice keys, a single key or NULL
+     * @param Collection|null $collection A collection of entities or NULL
+     * @return string|null An string of tags or NULL
      */
     public function transform($collection)
     {
@@ -41,6 +40,12 @@ class EntitiesToStringTransformer implements DataTransformerInterface
         return implode(', ', $array);
     }
 
+    /**
+     * Transforms string into tags entities
+     *
+     * @param string|null $data
+     * @return Collection|null
+     */
     public function reverseTransform($data)
     {
         $collection = new ArrayCollection();
@@ -54,16 +59,14 @@ class EntitiesToStringTransformer implements DataTransformerInterface
         }
 
         $tags = explode(',', $data);
-        // strip whitespace
+        // strip whitespaces from beginning and end of a tag text
         foreach($tags as &$text) {
             $text = trim($text);
         }
         unset($text);
-
         // removes duplicates
         $tags = array_unique($tags);
 
-        // @todo если пусто?
         foreach ($tags as $text) {
             $tag = $this->em->getRepository("StfalconBlogBundle:Tag")
                     ->findOneBy(array('text' => $text));
