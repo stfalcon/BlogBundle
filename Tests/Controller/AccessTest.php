@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\PortfolioBundle\Tests\Controller;
+namespace StfalconBundle\Bundle\BlogBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 

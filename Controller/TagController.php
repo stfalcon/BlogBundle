@@ -30,10 +30,12 @@ class TagController extends Controller
     {
         $tag = $this->_findTagBySlug($slug);
 
-        $breadcrumbs = $this->get('menu.breadcrumbs');
-        $breadcrumbs->addChild('Блог', $this->get('router')->generate('blog'));
-        $breadcrumbs->addChild($tag->getText())->setIsCurrent(true);
-
+        if ($this->has('menu.breadcrumbs')) {
+            $breadcrumbs = $this->get('menu.breadcrumbs');
+            $breadcrumbs->addChild('Блог', $this->get('router')->generate('blog'));
+            $breadcrumbs->addChild($tag->getText())->setIsCurrent(true);
+        }
+        
         return array(
             'tag' => $tag,
         );

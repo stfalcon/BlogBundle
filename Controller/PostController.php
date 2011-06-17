@@ -31,8 +31,10 @@ class PostController extends Controller
         $posts = $this->get('doctrine')->getEntityManager()
                 ->getRepository("StfalconBlogBundle:Post")->getAllPosts();
 
-        $breadcrumbs = $this->get('menu.breadcrumbs');
-        $breadcrumbs->addChild('Блог')->setIsCurrent(true);
+        if ($this->has('menu.breadcrumbs')) {
+            $breadcrumbs = $this->get('menu.breadcrumbs');
+            $breadcrumbs->addChild('Блог')->setIsCurrent(true);
+        }
 
         return array('posts' => $posts);
     }
@@ -92,9 +94,11 @@ class PostController extends Controller
     {
         $post = $this->_findPostBySlug($slug);
 
-        $breadcrumbs = $this->get('menu.breadcrumbs');
-        $breadcrumbs->addChild('Блог', $this->get('router')->generate('blog'));
-        $breadcrumbs->addChild($post->getTitle())->setIsCurrent(true);
+        if ($this->has('menu.breadcrumbs')) {
+            $breadcrumbs = $this->get('menu.breadcrumbs');
+            $breadcrumbs->addChild('Блог', $this->get('router')->generate('blog'));
+            $breadcrumbs->addChild($post->getTitle())->setIsCurrent(true);
+        }
 
         return array(
             'post' => $post,
@@ -111,7 +115,6 @@ class PostController extends Controller
     {
         $post = $this->_findPostBySlug($slug);
         $form = $this->get('form.factory')->create(new PostForm(), $post);
-
 
         $request = $this->get('request');
         if ($request->getMethod() == 'POST') {
