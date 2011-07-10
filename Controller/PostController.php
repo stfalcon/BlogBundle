@@ -22,10 +22,11 @@ class PostController extends Controller
     /**
      * List of posts for admin
      *
-     * @Route("/{_locale}/blog", name="blog",
-     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
+     * @Route("/blog", name="blog")
      * @Template()
      */
+//     * @Route("/{_locale}/blog", name="blog",
+//     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
     public function indexAction()
     {
         $posts = $this->get('doctrine')->getEntityManager()
@@ -86,17 +87,20 @@ class PostController extends Controller
     /**
      * View post
      *
-     * @Route("/{_locale}/blog/post/{slug}", name="blog_post_view",
-     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
+     * @Route("/blog/post/{slug}", name="blog_post_view")
      * @Template()
      */
+//     * @Route("/{_locale}/blog/post/{slug}", name="blog_post_view",
+//     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
     public function viewAction($slug)
     {
         $post = $this->_findPostBySlug($slug);
 
-        $menu = $this->get('menu.breadcrumbs');
-        $menu->getChild('Блог')->setIsCurrent(true);
-
+//        if ($this->has('menu.main')) {
+//            $menu = $this->get('menu.main');
+//            $menu->getChild('Блог')->setIsCurrent(true);
+//        }
+        
         if ($this->has('menu.breadcrumbs')) {
             $breadcrumbs = $this->get('menu.breadcrumbs');
             $breadcrumbs->addChild('Блог', $this->get('router')->generate('blog'));
@@ -180,9 +184,10 @@ class PostController extends Controller
     /**
      * RSS feed
      *
-     * @Route("/{_locale}/blog/rss", name="blog_rss",
-     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
+     * @Route("/blog/rss", name="blog_rss")
      */
+//     * @Route("/{_locale}/blog/rss", name="blog_rss",
+//     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
     public function rssAction()
     {
         $feed = new \Zend\Feed\Writer\Feed();

@@ -22,10 +22,11 @@ class TagController extends Controller
     /**
      * View tag
      *
-     * @Route("/{_locale}/blog/tag/{slug}", name="blog_tag_view",
-     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
+     * @Route("/blog/tag/{slug}", name="blog_tag_view")
      * @Template()
      */
+//     * @Route("/{_locale}/blog/tag/{slug}", name="blog_tag_view",
+//     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
     public function viewAction($slug)
     {
         $tag = $this->_findTagBySlug($slug);
