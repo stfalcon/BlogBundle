@@ -24,4 +24,9 @@ class PostForm extends AbstractType
             'data_class' => 'Stfalcon\Bundle\BlogBundle\Entity\Post',
         );
     }
+    
+    public function getName()
+    {
+        return 'post';
+    }
 }

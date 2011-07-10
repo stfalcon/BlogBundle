@@ -94,6 +94,9 @@ class PostController extends Controller
     {
         $post = $this->_findPostBySlug($slug);
 
+        $menu = $this->get('menu.breadcrumbs');
+        $menu->getChild('Блог')->setIsCurrent(true);
+
         if ($this->has('menu.breadcrumbs')) {
             $breadcrumbs = $this->get('menu.breadcrumbs');
             $breadcrumbs->addChild('Блог', $this->get('router')->generate('blog'));
