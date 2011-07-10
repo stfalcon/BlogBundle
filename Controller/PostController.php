@@ -210,4 +210,21 @@ class PostController extends Controller
 
         return new Response($feed->export('rss'));
     }
+    
+
+    /**
+     * Show last twitts
+     *
+     * @param int $count
+     * @return array()
+     * @Template()
+     */
+    public function lastAction($count = 1)
+    {
+        $posts = $this->get('doctrine')->getEntityManager()
+                ->getRepository("StfalconBlogBundle:Post")->getLastPosts($count);
+        
+        return array('posts' => $posts);
+    }
+    
 }

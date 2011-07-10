@@ -23,4 +23,20 @@ class PostRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    /**
+     * Get last posts
+     *
+     * @param type $count
+     * @return array
+     */
+    public function getLastPosts($count = null)
+    {
+        $query = $this->getEntityManager()->createQuery('SELECT p FROM StfalconBlogBundle:Post p');
+        if ((int) $count) {
+            $query->setMaxResults($count);
+        }
+        
+        return $query->getResult();
+    }
 }
