@@ -19,7 +19,13 @@ class PostRepository extends EntityRepository
      */
     public function getAllPosts()
     {
-        $query = $this->getEntityManager()->createQuery('SELECT p FROM StfalconBlogBundle:Post p');
+        $query = $this->getEntityManager()->createQuery('
+            SELECT
+                p
+            FROM
+                StfalconBlogBundle:Post p
+            ORDER BY
+                p.created DESC');
 
         return $query->getResult();
     }

@@ -6,7 +6,9 @@
             {{ post.title }}
         </h1>
 
-        {{ post.textAsHtml|moreToSpan|raw }}
+        <p>
+            {{ post.textAsHtml|moreToSpan|raw }}
+        </p>
 
         {% include 'StfalconBlogBundle:Post:_post_info.html.twig' with {'post': post} %}
 
