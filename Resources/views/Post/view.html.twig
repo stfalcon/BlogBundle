@@ -10,7 +10,7 @@
             {{ post.textAsHtml|moreToSpan|raw }}
         </p>
 
-        {% include 'StfalconBlogBundle:Post:_post_info.html.twig' with {'post': post} %}
+        {% include 'StfalconBlogBundle:Post:_post_info.html.twig' with {'post': post, 'share_buttons': true} %}
 
         <div id="disqus_thread"></div>
         <script type="text/javascript">
