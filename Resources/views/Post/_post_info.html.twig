@@ -14,7 +14,9 @@
         <a href="http://blog.stfalcon.com">Степан Танасийчук</a>,
     </li>#}
     <li class="comments">
-        <a href="{{ path('blog_post_view', { 'slug': post.slug }) }}#disqus_thread">{{ 'Комментировать'|trans }}</a>
+        <a href="{{ path('blog_post_view', { 'slug': post.slug }) }}#disqus_thread" data-disqus-identifier="stfalcon-studio_post_{{ post.id }}">
+            {{ 'Комментировать'|trans }}
+        </a>
     </li>
 
     {% if share_buttons is defined %}
