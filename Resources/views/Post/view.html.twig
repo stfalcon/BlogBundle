@@ -17,11 +17,9 @@
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             var disqus_shortname = 'stfalcon-studio';
-
             var disqus_identifier = 'stfalcon-studio_post_{{ post.id }}';
-            var disqus_url = '{{ path('blog_post_view', { 'slug': post.slug }) }}';
-            {# todo устанавливать в зависимости от параметров среды или из конфига #}
-            //var disqus_developer = 1;
+            var disqus_url = '{{ url('blog_post_view', { 'slug': post.slug }) }}';
+            var disqus_title = '{{ post.title }}'
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
