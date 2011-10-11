@@ -28,7 +28,7 @@ class Post
 
     /**
      * Post title
-     * 
+     *
      * @var string $title
      * @Assert\NotBlank()
      * @ORM\Column(name="title", type="string", length=255)
@@ -46,7 +46,7 @@ class Post
 
     /**
      * Post text
-     * 
+     *
      * @var text $text
      * @Assert\NotBlank()
      * @ORM\Column(name="text", type="text")
@@ -63,7 +63,7 @@ class Post
 
     /**
      * Tags for post
-     * 
+     *
      * @var ArrayCollection
      * @Assert\NotBlank()
      * @ORM\ManyToMany(targetEntity="Stfalcon\Bundle\BlogBundle\Entity\Tag")
@@ -89,6 +89,13 @@ class Post
      * @Gedmo\Timestampable(on="update")
      */
     private $updated;
+
+    /**
+     * @var int $commentsCount
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $commentsCount = 0;
 
     public function __construct()
     {
@@ -251,6 +258,14 @@ class Post
     public function setUpdated($updated)
     {
         $this->updated = $updated;
+    }
+
+    public function getCommentsCount() {
+        return $this->commentsCount;
+    }
+
+    public function setCommentsCount($commentsCount) {
+        $this->commentsCount = $commentsCount;
     }
 
 }
