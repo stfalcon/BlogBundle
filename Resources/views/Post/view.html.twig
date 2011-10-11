@@ -4,14 +4,16 @@
 
 {% block content %}
     <div class="post">
-        <h1>
-            {{ post.title }}
-        </h1>
+        <div class="post-wrapper">
+            <h1>
+                {{ post.title }}
+            </h1>
 
-        <p>
-            {{ post.textAsHtml|moreToSpan|raw }}
-        </p>
-
+            <p>
+                {{ post.textAsHtml|moreToSpan|raw }}
+            </p>
+        </div>
+            
         {% include 'StfalconBlogBundle:Post:_post_info.html.twig' with {'post': post, 'share_buttons': true} %}
 
         <p>
