@@ -1,6 +1,6 @@
 {% extends 'StfalconBlogBundle::internal.html.twig' %}
 
-{% block title %}/ {% trans %} Блог {% endtrans %} / {{ post.title }}{% endblock %}
+{% block title %}{{ parent() }} / {% trans %} Блог {% endtrans %} / {{ post.title }}{% endblock %}
 
 {% block content %}
     <div class="post">
