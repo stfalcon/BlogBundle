@@ -98,13 +98,23 @@ class Post
     private $commentsCount = 0;
 
     /**
-     * Initialization properties for new entity
+     * Initialization properties for new post entity
      *
      * @return void
      */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+    }
+
+    /**
+     * Get post id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -139,16 +149,6 @@ class Post
     public function getTags()
     {
         return $this->tags;
-    }
-
-    /**
-     * Get post id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
