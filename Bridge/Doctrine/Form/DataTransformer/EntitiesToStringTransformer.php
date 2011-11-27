@@ -7,11 +7,27 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 
+/**
+ * Transformer entities to string
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
+ */
 class EntitiesToStringTransformer implements DataTransformerInterface
 {
+
+    /**
+     * @var Doctrine\ORM\EntityManager
+     */
     protected $em;
 
-    public function __construct($em)
+    /**
+     * Constructor injection. Set entity manager to object
+     *
+     * @param Doctrine\ORM\EntityManager $em Entity manager object
+     *
+     * @return void
+     */
+    public function __construct(\Doctrine\ORM\EntityManager $em)
     {
         $this->em = $em;
     }
@@ -20,6 +36,7 @@ class EntitiesToStringTransformer implements DataTransformerInterface
      * Transforms tags entities into string (separated by comma)
      *
      * @param Collection|null $collection A collection of entities or NULL
+     *
      * @return string|null An string of tags or NULL
      */
     public function transform($collection)
@@ -43,7 +60,8 @@ class EntitiesToStringTransformer implements DataTransformerInterface
     /**
      * Transforms string into tags entities
      *
-     * @param string|null $data
+     * @param string|null $data Input string data
+     *
      * @return Collection|null
      */
     public function reverseTransform($data)
@@ -53,14 +71,14 @@ class EntitiesToStringTransformer implements DataTransformerInterface
         if ('' === $data || null === $data) {
             return $collection;
         }
-        
+
         if (!is_string($data)) {
             throw new UnexpectedTypeException($data, 'string');
         }
 
         $tags = explode(',', $data);
         // strip whitespaces from beginning and end of a tag text
-        foreach($tags as &$text) {
+        foreach ($tags as &$text) {
             $text = trim($text);
         }
         unset($text);

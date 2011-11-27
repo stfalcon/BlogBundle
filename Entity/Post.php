@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Stfalcon\Bundle\BlogBundle\Entity\Post
+ * Post entity
  *
  * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  * @ORM\Table(name="blog_posts")
@@ -97,26 +97,52 @@ class Post
      */
     private $commentsCount = 0;
 
+    /**
+     * Initialization properties for new entity
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
     }
 
     /**
-     * Set post id
+     * Add tag to post
      *
-     * @param int $id
+     * @param Tag $tag A tag object
+     *
      * @return void
      */
-    public function setId($id)
+    public function addTag(Tag $tag)
     {
-        $this->id = $id;
+        $this->tags[] = $tag;
+    }
+
+    /**
+     * Set tags to post
+     *
+     * @param \Doctrine\Common\Collections\Collection $tags Tags collection
+     */
+    public function setTags(\Doctrine\Common\Collections\Collection $tags)
+    {
+        $this->tags = $tags;
+    }
+
+    /**
+     * Get all tags
+     *
+     * @return ArrayCollection
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 
     /**
      * Get post id
      *
-     * @return null|int
+     * @return int
      */
     public function getId()
     {
@@ -126,7 +152,8 @@ class Post
     /**
      * Set post title
      *
-     * @param string $title
+     * @param string $title Text of the title
+     *
      * @return void
      */
     public function setTitle($title)
@@ -145,6 +172,18 @@ class Post
     }
 
     /**
+     * Set post slug
+     *
+     * @param string $slug Unique text identifier
+     *
+     * @return void
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
      * Get post slug
      *
      * @return string
@@ -155,19 +194,22 @@ class Post
     }
 
     /**
-     * Set post slug
+     * Set post text
      *
-     * @param string $slug
+     * @param string $text Text for post
+     *
+     * @return void
      */
-    public function setSlug($slug)
+    public function setText($text)
     {
-        $this->slug = $slug;
+        $this->text = $text;
+        $this->textAsHtml = $this->_transformTextAsHtml($text);
     }
 
     /**
      * Get post text
      *
-     * @return null|string
+     * @return string
      */
     public function getText()
     {
@@ -175,38 +217,8 @@ class Post
     }
 
     /**
-     * Set post text
-     *
-     * @param string $text
-     * @return void
-     */
-    public function setText($text)
-    {
-        $this->text = $text;
-        $this->setTextAsHtml($text);
-    }
-
-    private function setTextAsHtml($text)
-    {
-        // update text html code
-        require_once __DIR__ . '/../Resources/vendor/geshi/geshi.php';
-
-        $text = preg_replace_callback(
-                    '/<pre lang="(.*?)">\r?\n?(.*?)\r?\n?\<\/pre>/is',
-                    /**
-                     * @param string $data
-                     * @return string
-                     */
-                    function($data) {
-                        $geshi = new \GeSHi($data[2], $data[1]);
-                        return $geshi->parse_code();
-                    }, $text);
-
-        $this->textAsHtml = $text;
-    }
-
-    /**
      * Get post text as HTML code
+     *
      * @return string
      */
     public function getTextAsHtml()
@@ -214,58 +226,86 @@ class Post
         return $this->textAsHtml;
     }
 
-    /**
-     * Add tag to post
-     *
-     * @param Tag $tag
-     * @return void
-     */
-    public function addTag(Tag $tag)
-    {
-        $this->tags[] = $tag;
-    }
-
-    public function setTags(\Doctrine\Common\Collections\Collection $tags)
-    {
-        $this->tags = $tags;
-    }
 
     /**
-     * Get all tags
+     * Transform post text to html
      *
-     * @return ArrayCollection
+     * @param string $text Source post text
+     *
+     * @return string Post text as html
      */
-    public function getTags()
+    private function _transformTextAsHtml($text)
     {
-        return $this->tags;
+        // update text html code
+        require_once __DIR__ . '/../Resources/vendor/geshi/geshi.php';
+
+        $text = preg_replace_callback(
+            '/<pre lang="(.*?)">\r?\n?(.*?)\r?\n?\<\/pre>/is',
+            function($data) {
+                $geshi = new \GeSHi($data[2], $data[1]);
+                return $geshi->parse_code();
+            }, $text
+        );
+
+        return $text;
     }
 
+    /**
+     * Set time when post created
+     *
+     * @param \DateTime $created A time when post created
+     */
+    public function setCreated(\DateTime $created)
+    {
+        $this->created = $created;
+    }
+
+    /**
+     * Get time when post created
+     *
+     * @return \DateTime
+     */
     public function getCreated()
     {
         return $this->created;
     }
 
-    public function setCreated($created)
+    /**
+     * Set time when post updated
+     *
+     * @param \DateTime $created A time when post updated
+     */
+    public function setUpdated(\DateTime $updated)
     {
-        $this->created = $created;
+        $this->updated = $updated;
     }
 
+    /**
+     * Get time when post updated
+     *
+     * @return \DateTime
+     */
     public function getUpdated()
     {
         return $this->updated;
     }
 
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-    }
-
-    public function getCommentsCount() {
-        return $this->commentsCount;
-    }
-
+    /**
+     * Set comments count for post
+     *
+     * @param int $commentsCount A count of comments for post
+     */
     public function setCommentsCount($commentsCount) {
         $this->commentsCount = $commentsCount;
+    }
+
+    /**
+     * Get comments count for post
+     *
+     * @return int
+     */
+    public function getCommentsCount() {
+        return $this->commentsCount;
     }
 
 }
