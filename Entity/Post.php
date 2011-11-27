@@ -123,6 +123,8 @@ class Post
      * Set tags to post
      *
      * @param \Doctrine\Common\Collections\Collection $tags Tags collection
+     *
+     * @return void
      */
     public function setTags(\Doctrine\Common\Collections\Collection $tags)
     {
@@ -164,7 +166,7 @@ class Post
     /**
      * Get post title
      *
-     * @return null|string
+     * @return string
      */
     public function getTitle()
     {
@@ -254,6 +256,8 @@ class Post
      * Set time when post created
      *
      * @param \DateTime $created A time when post created
+     *
+     * @return void
      */
     public function setCreated(\DateTime $created)
     {
@@ -273,7 +277,9 @@ class Post
     /**
      * Set time when post updated
      *
-     * @param \DateTime $created A time when post updated
+     * @param \DateTime $updated A time when post updated
+     *
+     * @return void
      */
     public function setUpdated(\DateTime $updated)
     {
@@ -294,8 +300,11 @@ class Post
      * Set comments count for post
      *
      * @param int $commentsCount A count of comments for post
+     *
+     * @return void
      */
-    public function setCommentsCount($commentsCount) {
+    public function setCommentsCount($commentsCount)
+    {
         $this->commentsCount = $commentsCount;
     }
 
@@ -304,7 +313,8 @@ class Post
      *
      * @return int
      */
-    public function getCommentsCount() {
+    public function getCommentsCount()
+    {
         return $this->commentsCount;
     }
 
