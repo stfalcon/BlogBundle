@@ -8,6 +8,8 @@ use Stfalcon\Bundle\BlogBundle\Entity\Post;
 
 /**
  * Posts fixtures
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
 class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
 {

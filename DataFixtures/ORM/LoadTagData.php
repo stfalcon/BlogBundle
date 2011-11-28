@@ -8,6 +8,8 @@ use Stfalcon\Bundle\BlogBundle\Entity\Tag;
 
 /**
  * Tags fixtures
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
 class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
 {

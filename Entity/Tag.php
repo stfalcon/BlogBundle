@@ -27,7 +27,7 @@ class Tag
 
     /**
      * Tag text
-     * 
+     *
      * @var text $text
      * @Assert\NotBlank()
      * @ORM\Column(name="text", type="string", length=255)
@@ -44,7 +44,8 @@ class Tag
     /**
      * Entity constructor
      *
-     * @param string $text
+     * @param string $text A tag text
+     *
      * @return void
      */
     public function  __construct($text = null)
@@ -54,20 +55,9 @@ class Tag
     }
 
     /**
-     * Set Tag id
-     *
-     * @param int $id
-     * @return void
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * Get Tag id
      *
-     * @return null|int
+     * @return int
      */
     public function getId()
     {
@@ -75,19 +65,10 @@ class Tag
     }
 
     /**
-     * Get Tag text
-     *
-     * @return null|string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
      * Set Tag text
      *
-     * @param string $text
+     * @param string $text A tag text
+     *
      * @return void
      */
     public function setText($text)
@@ -95,6 +76,21 @@ class Tag
         $this->text = $text;
     }
 
+    /**
+     * Get Tag text
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * Get posts for this tag
+     *
+     * @return ArrayCollection
+     */
     public function getPosts()
     {
         return $this->posts;

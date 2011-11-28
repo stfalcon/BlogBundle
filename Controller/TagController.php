@@ -4,17 +4,15 @@ namespace Stfalcon\Bundle\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Stfalcon\Bundle\BlogBundle\Entity\Tag;
-use Stfalcon\Bundle\BlogBundle\Form\TagForm;
 
 /**
  * TagController
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
 class TagController extends Controller
 {
@@ -22,11 +20,12 @@ class TagController extends Controller
     /**
      * View tag
      *
+     * @param string $slug Tag slug
+     *
+     * @return array
      * @Route("/blog/tag/{slug}", name="blog_tag_view")
      * @Template()
      */
-//     * @Route("/{_locale}/blog/tag/{slug}", name="blog_tag_view",
-//     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
     public function viewAction($slug)
     {
         $tag = $this->_findTagBySlug($slug);
@@ -36,7 +35,7 @@ class TagController extends Controller
             $breadcrumbs->addChild('Блог', $this->get('router')->generate('blog'));
             $breadcrumbs->addChild($tag->getText())->setIsCurrent(true);
         }
-        
+
         return array(
             'tag' => $tag,
         );
@@ -45,7 +44,8 @@ class TagController extends Controller
     /**
      * Try find tag by id
      *
-     * @param int $slug
+     * @param int $slug Tag slug
+     *
      * @return Category
      */
     private function _findTagBySlug($slug)
@@ -60,4 +60,5 @@ class TagController extends Controller
 
         return $tag;
     }
+
 }

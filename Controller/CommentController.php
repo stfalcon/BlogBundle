@@ -9,6 +9,8 @@ use Stfalcon\Bundle\BlogBundle\Entity\Post;
 
 /**
  * Controller for actions with DISQUS comments
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
 class CommentController extends Controller
 {
