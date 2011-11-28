@@ -33,7 +33,8 @@ class PostRepository extends EntityRepository
     /**
      * Get last posts
      *
-     * @param type $count
+     * @param integer $count Max count of returned posts
+     *
      * @return array
      */
     public function getLastPosts($count = null)
@@ -42,7 +43,8 @@ class PostRepository extends EntityRepository
         if ((int) $count) {
             $query->setMaxResults($count);
         }
-        
+
         return $query->getResult();
     }
+
 }

@@ -15,6 +15,8 @@ use Stfalcon\Bundle\BlogBundle\Form\PostForm;
 
 /**
  * PostController
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
 class PostController extends Controller
 {
@@ -22,11 +24,10 @@ class PostController extends Controller
     /**
      * List of posts for admin
      *
+     * @return array
      * @Route("/blog", name="blog")
      * @Template()
      */
-//     * @Route("/{_locale}/blog", name="blog",
-//     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
     public function indexAction()
     {
         $posts = $this->get('doctrine')->getEntityManager()
@@ -76,7 +77,8 @@ class PostController extends Controller
                 $em->flush();
 
                 $this->get('request')->getSession()->setFlash('notice',
-                        'Congratulations, your post is successfully created!');
+                    'Congratulations, your post is successfully created!'
+                );
                 return new RedirectResponse($this->generateUrl('blog_post_index'));
             }
         }
@@ -87,11 +89,12 @@ class PostController extends Controller
     /**
      * View post
      *
+     * @param string $slug Post slug
+     *
+     * @return array
      * @Route("/blog/post/{slug}", name="blog_post_view")
      * @Template()
      */
-//     * @Route("/{_locale}/blog/post/{slug}", name="blog_post_view",
-//     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
     public function viewAction($slug)
     {
         $post = $this->_findPostBySlug($slug);
@@ -100,7 +103,7 @@ class PostController extends Controller
 //            $menu = $this->get('menu.main');
 //            $menu->getChild('Блог')->setIsCurrent(true);
 //        }
-        
+
         if ($this->has('menu.breadcrumbs')) {
             $breadcrumbs = $this->get('menu.breadcrumbs');
             $breadcrumbs->addChild('Блог', $this->get('router')->generate('blog'));
@@ -115,6 +118,9 @@ class PostController extends Controller
     /**
      * Edit post
      *
+     * @param string $slug Post slug
+     *
+     * @return RedirectResponse
      * @Route("/admin/blog/post/edit/{slug}", name="blog_post_edit")
      * @Template()
      */
@@ -135,7 +141,8 @@ class PostController extends Controller
                 $em->flush();
 
                 $this->get('request')->getSession()->setFlash('notice',
-                        'Congratulations, your post is successfully updated!');
+                    'Congratulations, your post is successfully updated!'
+                );
                 return new RedirectResponse($this->generateUrl('blog_post_index'));
             }
         }
@@ -146,7 +153,8 @@ class PostController extends Controller
     /**
      * Delete post
      *
-     * @param string $slug
+     * @param string $slug Post slug
+     *
      * @return RedirectResponse
      * @Route("/admin/blog/post/delete/{slug}", name="blog_post_delete")
      */
@@ -165,7 +173,8 @@ class PostController extends Controller
     /**
      * Try find post by slug
      *
-     * @param int $slug
+     * @param string $slug Post slug
+     *
      * @return Category
      */
     private function _findPostBySlug($slug)
@@ -184,38 +193,38 @@ class PostController extends Controller
     /**
      * RSS feed
      *
+     * @return Response
      * @Route("/blog/rss", name="blog_rss")
      */
-//     * @Route("/{_locale}/blog/rss", name="blog_rss",
-//     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
     public function rssAction()
     {
         $feed = new \Zend\Feed\Writer\Feed();
 
         $config = $this->container->getParameter('stfalcon_blog.config');
-        
+
         $feed->setTitle($config['rss']['title']);
         $feed->setDescription($config['rss']['description']);
         $feed->setLink($this->generateUrl('blog_rss', array(), true));
 
         $posts = $this->get('doctrine')->getEntityManager()
                 ->getRepository("StfalconBlogBundle:Post")->getAllPosts();
-        foreach($posts as $post) {
+        foreach ($posts as $post) {
             $entry = new \Zend\Feed\Writer\Entry();
             $entry->setTitle($post->getTitle());
             $entry->setLink($this->generateUrl('blog_post_view', array('slug' => $post->getSlug()), true));
-            
+
             $feed->addEntry($entry);
         }
 
         return new Response($feed->export('rss'));
     }
-    
+
 
     /**
-     * Show last twitts
+     * Show last blog posts
      *
-     * @param int $count
+     * @param int $count A count of posts
+     *
      * @return array()
      * @Template()
      */
@@ -223,8 +232,8 @@ class PostController extends Controller
     {
         $posts = $this->get('doctrine')->getEntityManager()
                 ->getRepository("StfalconBlogBundle:Post")->getLastPosts($count);
-        
+
         return array('posts' => $posts);
     }
-    
+
 }
