@@ -5,6 +5,8 @@ namespace Stfalcon\Bundle\BlogBundle\Tests\Entity;
 use Stfalcon\Bundle\BlogBundle\Entity\Tag;
 
 /**
+ * Test cases for tag entity
+ *
  * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
 class TagEntityTest extends \PHPUnit_Framework_TestCase
@@ -12,8 +14,8 @@ class TagEntityTest extends \PHPUnit_Framework_TestCase
 
     public function testEmptyTagIdIsNull()
     {
-        $Tag = new Tag();
-        $this->assertNull($Tag->getId());
+        $tag = new Tag();
+        $this->assertNull($tag->getId());
     }
 
     public function testSetAndGetTagText()
@@ -25,7 +27,7 @@ class TagEntityTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($tag->getText(), $text);
     }
-    
+
     public function testTagConstructor()
     {
         $text = "symfony2";

@@ -4,6 +4,11 @@ namespace StfalconBundle\Bundle\BlogBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
+/**
+ * Test cases for PostController
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
+ */
 class PostControllerTest extends WebTestCase
 {
 
@@ -152,6 +157,6 @@ class PostControllerTest extends WebTestCase
         // check links to posts commets
         $this->assertEquals(1, $crawler->filter('div.post a[href="' . $firstUrl . '#disqus_thread"]')->count());
         $this->assertEquals(1, $crawler->filter('div.post a[href="' . $secondUrl . '#disqus_thread"]')->count());
-
     }
+
 }

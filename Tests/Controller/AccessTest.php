@@ -4,8 +4,14 @@ namespace StfalconBundle\Bundle\BlogBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
+/**
+ * Test cases for check access to blog actions
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
+ */
 class AccessTest extends WebTestCase
 {
+
     public function testAccessDeniedForUnathorizedUsers()
     {
         $this->_testReturnCode(401, $this->getUrl('blog_post_index', array()));
@@ -19,17 +25,19 @@ class AccessTest extends WebTestCase
         $this->loadFixtures(array(
                 'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadTagData',
                 'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
-        
+
         $this->_testReturnCode(200, $this->getUrl('blog', array()));
         $this->_testReturnCode(200, $this->getUrl('blog_post_view', array('slug' => 'my-first-post')), true);
     }
 
     /**
-     * Проверяет код ответа
+     * Check return code
      *
-     * @param string $url
-     * @param int $code
-     * @param bool $authentication
+     * @param int    $code           Expected code
+     * @param string $url            Page url for test
+     * @param bool   $authentication Log in
+     *
+     * @return void
      */
     protected function _testReturnCode($code, $url, $authentication = false)
     {

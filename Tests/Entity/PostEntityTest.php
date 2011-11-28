@@ -6,6 +6,8 @@ use Stfalcon\Bundle\BlogBundle\Entity\Post;
 use Stfalcon\Bundle\BlogBundle\Entity\Tag;
 
 /**
+ * Test cases for post entity
+ *
  * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
 class PostEntityTest extends \PHPUnit_Framework_TestCase
@@ -51,7 +53,7 @@ class PostEntityTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($post->getText(), $text);
     }
-    
+
     public function testAddTagToPostAndGetTags()
     {
         $post = new Post();
@@ -59,7 +61,7 @@ class PostEntityTest extends \PHPUnit_Framework_TestCase
         $post->addTag($tag1);
         $tag2 = new Tag('doctrine2');
         $post->addTag($tag2);
-        
+
         $this->assertTrue($post->getTags()->contains($tag1));
         $this->assertTrue($post->getTags()->contains($tag2));
         $this->assertEquals(count($post->getTags()), 2);
