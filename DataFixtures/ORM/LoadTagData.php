@@ -4,6 +4,7 @@ namespace Stfalcon\Bundle\BlogBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Stfalcon\Bundle\BlogBundle\Entity\Tag;
 
 /**
@@ -17,22 +18,22 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
     /**
      * Create and load tags fixtures to database
      *
-     * @param Doctrine\ORM\EntityManager $em Entity manager object
+     * @param Doctrine\ORM\EntityManager $manager Entity manager object
      *
      * @return void
      */
-    public function load($em)
+    public function load(ObjectManager $manager)
     {
         $symfony2 = new Tag('symfony2');
-        $em->persist($symfony2);
+        $manager->persist($symfony2);
 
         $doctrine2 = new Tag('doctrine2');
-        $em->persist($doctrine2);
+        $manager->persist($doctrine2);
 
         $php = new Tag('php');
-        $em->persist($php);
+        $manager->persist($php);
 
-        $em->flush();
+        $manager->flush();
 
         $this->addReference('tag-php', $php);
         $this->addReference('tag-doctrine2', $doctrine2);

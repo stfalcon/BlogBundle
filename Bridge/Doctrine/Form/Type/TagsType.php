@@ -20,11 +20,11 @@ class TagsType extends AbstractType
     /**
      * Constructor injection
      *
-     * @param Symfony\Bundle\DoctrineBundle\Registry $registry Doctrine registry object
+     * @param Doctrine\Bundle\DoctrineBundle\Registry $registry Doctrine registry object
      *
      * @return void
      */
-    public function __construct(\Symfony\Bundle\DoctrineBundle\Registry $registry)
+    public function __construct(\Doctrine\Bundle\DoctrineBundle\Registry $registry)
     {
         $this->registry = $registry;
     }
