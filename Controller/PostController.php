@@ -89,21 +89,14 @@ class PostController extends Controller
     /**
      * View post
      *
-     * @param string $slug Post slug
+     * @param Post $post
      *
      * @return array
      * @Route("/blog/post/{slug}", name="blog_post_view")
      * @Template()
      */
-    public function viewAction($slug)
+    public function viewAction(Post $post)
     {
-        $post = $this->_findPostBySlug($slug);
-
-//        if ($this->has('menu.main')) {
-//            $menu = $this->get('menu.main');
-//            $menu->getChild('Блог')->setIsCurrent(true);
-//        }
-
         if ($this->has('menu.breadcrumbs')) {
             $breadcrumbs = $this->get('menu.breadcrumbs');
             $breadcrumbs->addChild('Блог', $this->get('router')->generate('blog'));
@@ -118,15 +111,14 @@ class PostController extends Controller
     /**
      * Edit post
      *
-     * @param string $slug Post slug
+     * @param Post $post
      *
      * @return RedirectResponse
      * @Route("/admin/blog/post/edit/{slug}", name="blog_post_edit")
      * @Template()
      */
-    public function editAction($slug)
+    public function editAction(Post $post)
     {
-        $post = $this->_findPostBySlug($slug);
         $form = $this->get('form.factory')->create(new PostForm(), $post);
 
         $request = $this->get('request');
@@ -153,41 +145,19 @@ class PostController extends Controller
     /**
      * Delete post
      *
-     * @param string $slug Post slug
+     * @param Post $post
      *
      * @return RedirectResponse
      * @Route("/admin/blog/post/delete/{slug}", name="blog_post_delete")
      */
-    public function deleteAction($slug)
+    public function deleteAction($post)
     {
-        $post = $this->_findPostBySlug($slug);
-
         $em = $this->get('doctrine')->getEntityManager();
         $em->remove($post);
         $em->flush();
 
         $this->get('request')->getSession()->setFlash('notice', 'Your post is successfully delete.');
         return new RedirectResponse($this->generateUrl('blog_post_index'));
-    }
-
-    /**
-     * Try find post by slug
-     *
-     * @param string $slug Post slug
-     *
-     * @return Category
-     */
-    private function _findPostBySlug($slug)
-    {
-        $em = $this->get('doctrine.orm.entity_manager');
-
-        $post = $em->getRepository("StfalconBlogBundle:Post")
-                ->findOneBy(array('slug' => $slug));
-        if (!$post) {
-            throw new NotFoundHttpException('The post does not exist.');
-        }
-
-        return $post;
     }
 
     /**
@@ -218,7 +188,6 @@ class PostController extends Controller
 
         return new Response($feed->export('rss'));
     }
-
 
     /**
      * Show last blog posts
