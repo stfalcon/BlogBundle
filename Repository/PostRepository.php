@@ -25,7 +25,8 @@ class PostRepository extends EntityRepository
             FROM
                 StfalconBlogBundle:Post p
             ORDER BY
-                p.created DESC');
+                p.created DESC
+            ');
 
         return $query->getResult();
     }
@@ -39,7 +40,15 @@ class PostRepository extends EntityRepository
      */
     public function getLastPosts($count = null)
     {
-        $query = $this->getEntityManager()->createQuery('SELECT p FROM StfalconBlogBundle:Post p');
+        $query = $this->getEntityManager()->createQuery('
+            SELECT
+                p
+            FROM
+                StfalconBlogBundle:Post p
+            ORDER BY
+                p.created DESC
+            ');
+
         if ((int) $count) {
             $query->setMaxResults($count);
         }

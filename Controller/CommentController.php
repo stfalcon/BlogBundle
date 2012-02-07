@@ -25,6 +25,10 @@ class CommentController extends Controller
      */
     public function disqusSyncAction(Post $post)
     {
+        // @todo. нужно доставать полный список ЗААПРУВЛЕННЫХ комментариев или
+        // колличество комментариев к записи (если такой метод появится в API disqus)
+        // после чего обновлять их колличество в БД
+
         $post->setCommentsCount($post->getCommentsCount() + 1);
         $em = $this->get('doctrine.orm.entity_manager');
         $em->persist($post);
