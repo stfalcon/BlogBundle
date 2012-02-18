@@ -1,0 +1,27 @@
+{
+    "name": "stfalcon/blog-bundle",
+    "description": "Simple blog module.",
+    "keywords": ["blog"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stepan Tanasiychuk",
+            "homepage": "http://blog.stfalcon.com",
+            "email": "ceo@stfalcon.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/symfony": ">=2.0",
+        "stof/doctrine-extensions-bundle": "1.0.1",
+        "liip/functional-test-bundle": "master-dev",
+        "doctrine/doctrine-fixtures-bundle": "v2.0.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "Stfalcon\\Bundle\\BlogBundle": ""
+        }
+    },
+    "target-dir": "Stfalcon/Bundle/BlogBundle"
+}
