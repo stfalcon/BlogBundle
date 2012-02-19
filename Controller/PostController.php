@@ -33,9 +33,9 @@ class PostController extends Controller
         $posts = $this->get('doctrine')->getEntityManager()
                 ->getRepository("StfalconBlogBundle:Post")->getAllPosts();
 
-        if ($this->has('menu.breadcrumbs')) {
-            $breadcrumbs = $this->get('menu.breadcrumbs');
-            $breadcrumbs->addChild('Блог')->setIsCurrent(true);
+        if ($this->has('application_default.menu.breadcrumbs')) {
+            $breadcrumbs = $this->get('application_default.menu.breadcrumbs');
+            $breadcrumbs->addChild('Блог')->setCurrent(true);
         }
 
         return array('posts' => $posts);
@@ -97,10 +97,10 @@ class PostController extends Controller
      */
     public function viewAction(Post $post)
     {
-        if ($this->has('menu.breadcrumbs')) {
-            $breadcrumbs = $this->get('menu.breadcrumbs');
-            $breadcrumbs->addChild('Блог', $this->get('router')->generate('blog'));
-            $breadcrumbs->addChild($post->getTitle())->setIsCurrent(true);
+        if ($this->has('application_default.menu.breadcrumbs')) {
+            $breadcrumbs = $this->get('application_default.menu.breadcrumbs');
+            $breadcrumbs->addChild('Блог', array('route' => 'blog'));
+            $breadcrumbs->addChild($post->getTitle())->setCurrent(true);
         }
 
         return array(
