@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 
 use Stfalcon\Bundle\BlogBundle\Entity\Post;
 use Stfalcon\Bundle\BlogBundle\Form\PostForm;
@@ -47,7 +46,6 @@ class PostController extends Controller
      *
      * @return array
      * @Route("/admin/blog/posts", name="blog_post_index")
-     * @Secure(roles="ROLE_ADMIN")
      * @Template()
      */
     public function listAction()
@@ -63,7 +61,6 @@ class PostController extends Controller
      *
      * @return array|RedirectResponse
      * @Route("/admin/blog/post/create", name="blog_post_create")
-     * @Secure(roles="ROLE_ADMIN")
      * @Template()
      */
     public function createAction()
@@ -118,7 +115,6 @@ class PostController extends Controller
      *
      * @return RedirectResponse
      * @Route("/admin/blog/post/edit/{slug}", name="blog_post_edit")
-     * @Secure(roles="ROLE_ADMIN")
      * @Template()
      */
     public function editAction(Post $post)
@@ -153,7 +149,6 @@ class PostController extends Controller
      *
      * @return RedirectResponse
      * @Route("/admin/blog/post/delete/{slug}", name="blog_post_delete")
-     * @Secure(roles="ROLE_ADMIN")
      */
     public function deleteAction($post)
     {
