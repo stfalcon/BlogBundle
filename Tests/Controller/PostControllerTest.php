@@ -161,11 +161,11 @@ class PostControllerTest extends WebTestCase
 
     public function _testUploadValidImageInPost()
     {
-
     }
 
-    public function _testUploadInvalidImageInPost()
+    public function testUploadInvalidImageInPost()
     {
-
+        $crawler = $this->fetchCrawler($this->getUrl('blog_post_upload_image', array('qqfile' => '1.jpg')), 'POST', true, true);
+        $this->assertEquals(1, $crawler->filter('html:contains("unknown file")')->count());
     }
 }
