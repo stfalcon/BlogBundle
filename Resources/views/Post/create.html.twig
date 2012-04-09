@@ -1,10 +1,30 @@
 {% extends 'StfalconBlogBundle::layout.html.twig' %}
 
 {% block content %}
-    <h4>Create new post</h4>
+    <script type="text/javascript" src="{{ asset('js/fileuploader.js') }}"></script>
+    <script>
+        function createUploader(){
+            var uploader = new qq.FileUploader({
+                element: document.getElementById('uploadImages'),
+                action: '{{ path('blog_post_upload_image') }}',
+                debug: true,
+                onComplete: function(id, fileName, responseJSON) {
+                    if (responseJSON['success'] = true) {
+                        var str = '\n<img src="{{ asset('uploads/images/') }}' + responseJSON['filename'] + '" alt=""/>';
+                        $('#post_text').val($('#post_text').val() + str);
+                    }
+                }
+            });
+        }
 
+        // in your app create uploader as soon as the DOM is ready
+        // don't wait for the window to load
+        window.onload = createUploader;
+    </script>
+    <h4>Create new post</h4>
     <form action="#" method="post">
         <fieldset>
+            <div id="uploadImages"></div>
             {{ form_widget(form) }}
             <input type="submit" value="Send" />
         </fieldset>
