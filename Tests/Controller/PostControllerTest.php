@@ -159,4 +159,13 @@ class PostControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('div.post a[href="' . $secondUrl . '#disqus_thread"]')->count());
     }
 
+    public function _testUploadValidImageInPost()
+    {
+
+    }
+
+    public function _testUploadInvalidImageInPost()
+    {
+
+    }
 }
