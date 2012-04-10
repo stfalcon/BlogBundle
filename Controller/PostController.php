@@ -214,50 +214,31 @@ class PostController extends Controller
      */
     public function uploadImageAction()
     {
-        if (isset($_SERVER["CONTENT_LENGTH"])) {
-            $fileSize = (int)$_SERVER["CONTENT_LENGTH"];
-            if (isset($_GET['qqfile'])) {
-                $file = $_GET['qqfile'];
-                $pathinfo = pathinfo($file);
-                $filename = $pathinfo['filename'];
-                $ext = strtolower($pathinfo['extension']);
-                if (in_array($ext, array('jpg', 'jpeg', 'gif', 'png'))) {
-                    $newName = uniqid() . '.' . $ext;
-                    $input = fopen("php://input", "r");
-                    $temp = tmpfile();
-                    $realSize = stream_copy_to_stream($input, $temp);
-                    fclose($input);
-
-                    $uploadDir = realpath($this->get('kernel')->getRootDir() . '/../web/uploads/images');
-
-                    $target = fopen($uploadDir . '/' . $newName, "w");
-                    fseek($temp, 0, SEEK_SET);
-                    stream_copy_to_stream($temp, $target);
-                    fclose($target);
-
-                    $resopnse = array(
-                        'success' => true,
-                        'filename' => $newName,
-                    );
-                } else {
-                    $resopnse = array(
-                        'success' => false,
-                        'error' => 'file extension is not valid!'
-                    );
-                }
+        $file = $this->getRequest()->files->get('inline_upload_file');
+        if ($file->isValid()) {
+            $pathinfo = pathinfo($file->getClientOriginalName());
+            $ext = strtolower($pathinfo['extension']);
+            if (in_array($ext, array('jpg', 'jpeg', 'gif', 'png'))) {
+                $uploadDir = realpath($this->get('kernel')->getRootDir() . '/../web/uploads/images');
+                $newName = uniqid() . '.' . $ext;
+                $file->move($uploadDir, $newName);
+                $info = getImageSize($uploadDir . '/' . $newName);
+                $resopnse = array(
+                    'status' => 'success',
+                    'src' => '/uploads/images/' . $newName,
+                    'width' => $info[0],
+                    'height' => $info[1],
+                );
             } else {
                 $resopnse = array(
-                    'success' => false,
-                    'error' => 'unknown file'
+                    'msg' => 'File extension is not valid!',
                 );
             }
         } else {
             $resopnse = array(
-                'success' => false,
-                'error' => 'unknown file'
+                'msg' => 'There are errors during upload',
             );
         }
-
 
         return new Response(json_encode($resopnse));
     }
