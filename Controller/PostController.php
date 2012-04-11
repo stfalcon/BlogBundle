@@ -215,7 +215,7 @@ class PostController extends Controller
     public function uploadImageAction()
     {
         $file = $this->getRequest()->files->get('inline_upload_file');
-        if ($file->isValid()) {
+        if ($file && $file->isValid()) {
             $pathinfo = pathinfo($file->getClientOriginalName());
             $ext = strtolower($pathinfo['extension']);
             if (in_array($ext, array('jpg', 'jpeg', 'gif', 'png'))) {
@@ -236,7 +236,7 @@ class PostController extends Controller
             }
         } else {
             $resopnse = array(
-                'msg' => 'There are errors during upload',
+                'msg' => 'Please, select proper file!',
             );
         }
 
