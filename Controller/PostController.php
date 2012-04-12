@@ -223,23 +223,23 @@ class PostController extends Controller
                 $newName = uniqid() . '.' . $ext;
                 $file->move($uploadDir, $newName);
                 $info = getImageSize($uploadDir . '/' . $newName);
-                $resopnse = array(
+                $response = array(
                     'status' => 'success',
                     'src' => '/uploads/images/' . $newName,
                     'width' => $info[0],
                     'height' => $info[1],
                 );
             } else {
-                $resopnse = array(
+                $response = array(
                     'msg' => 'File extension is not valid!',
                 );
             }
         } else {
-            $resopnse = array(
+            $response = array(
                 'msg' => 'Please, select proper file!',
             );
         }
 
-        return new Response(json_encode($resopnse));
+        return new Response(json_encode($response));
     }
 }
