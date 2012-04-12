@@ -3,6 +3,7 @@
 namespace StfalconBundle\Bundle\BlogBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Test cases for PostController
@@ -159,4 +160,41 @@ class PostControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('div.post a[href="' . $secondUrl . '#disqus_thread"]')->count());
     }
 
+    public function testUploadValidImageInPost()
+    {
+        $client = $this->makeClient(true);
+        $validFile = realpath($this->getContainer()->get('kernel')->getRootDir() . '/../web/images') . '/required-field.png';
+        copy($validFile, realpath($this->getContainer()->get('kernel')->getRootDir() . '/../web/images') . '/required-field_copy.png');
+        $validFile = realpath($this->getContainer()->get('kernel')->getRootDir() . '/../web/images') . '/required-field_copy.png';
+        $photo = new UploadedFile(
+                $validFile,
+                'required-field.png',
+                'image/png',
+                123,
+                null,
+                true
+        );
+        $crawler = $client->request('POST', $this->getUrl('blog_post_upload_image'), array(), array('inline_upload_file' => $photo));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertEquals(1, $crawler->filter('html:contains("success")')->count());
+    }
+
+    public function testUploadInvalidImageInPost()
+    {
+        $client = $this->makeClient(true);
+        $invalidFile = realpath($this->getContainer()->get('kernel')->getRootDir() . '/../web') . '/app.php';
+        $photo = new UploadedFile(
+                $invalidFile,
+                'app.php',
+                'image/jpeg',
+                123,
+                null,
+                true
+        );
+        $crawler = $client->request('POST', $this->getUrl('blog_post_upload_image'), array(), array('inline_upload_file' => $photo));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertEquals(1, $crawler->filter('html:contains("File extension is not valid")')->count());
+    }
 }

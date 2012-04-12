@@ -205,4 +205,41 @@ class PostController extends Controller
         return array('posts' => $posts);
     }
 
+
+    /**
+     * Upload photo
+     *
+     * @return string
+     * @Route("/admin/blog/uploadImage", name="blog_post_upload_image")
+     */
+    public function uploadImageAction()
+    {
+        $file = $this->getRequest()->files->get('inline_upload_file');
+        if ($file && $file->isValid()) {
+            $pathinfo = pathinfo($file->getClientOriginalName());
+            $ext = strtolower($pathinfo['extension']);
+            if (in_array($ext, array('jpg', 'jpeg', 'gif', 'png'))) {
+                $uploadDir = realpath($this->get('kernel')->getRootDir() . '/../web/uploads/images');
+                $newName = uniqid() . '.' . $ext;
+                $file->move($uploadDir, $newName);
+                $info = getImageSize($uploadDir . '/' . $newName);
+                $response = array(
+                    'status' => 'success',
+                    'src' => '/uploads/images/' . $newName,
+                    'width' => $info[0],
+                    'height' => $info[1],
+                );
+            } else {
+                $response = array(
+                    'msg' => 'File extension is not valid!',
+                );
+            }
+        } else {
+            $response = array(
+                'msg' => 'Please, select proper file!',
+            );
+        }
+
+        return new Response(json_encode($response));
+    }
 }
