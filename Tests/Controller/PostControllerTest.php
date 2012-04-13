@@ -180,7 +180,7 @@ class PostControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('html:contains("success")')->count());
     }
 
-    public function _testUploadInvalidImageInPost()
+    public function testUploadInvalidImageInPost()
     {
         $client = $this->makeClient(true);
         $invalidFile = realpath($this->getContainer()->get('kernel')->getRootDir() . '/../web') . '/app.php';
@@ -195,6 +195,6 @@ class PostControllerTest extends WebTestCase
         $crawler = $client->request('POST', $this->getUrl('blog_post_upload_image'), array(), array('form' => array('inlineUploadFile' => $photo)));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->assertEquals(1, $crawler->filter('html:contains("File extension is not valid")')->count());
+        $this->assertEquals(1, $crawler->filter('html:contains("Your file is not valid")')->count());
     }
 }
