@@ -160,7 +160,7 @@ class PostControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('div.post a[href="' . $secondUrl . '#disqus_thread"]')->count());
     }
 
-    public function _testUploadValidImageInPost()
+    public function testUploadValidImageInPost()
     {
         $client = $this->makeClient(true);
         $validFile = realpath($this->getContainer()->get('kernel')->getRootDir() . '/../web/images') . '/required-field.png';
@@ -174,7 +174,7 @@ class PostControllerTest extends WebTestCase
                 null,
                 true
         );
-        $crawler = $client->request('POST', $this->getUrl('blog_post_upload_image'), array(), array('form[inlineUploadFile]' => $photo));
+        $crawler = $client->request('POST', $this->getUrl('blog_post_upload_image'), array(), array('form' => array('inlineUploadFile' => $photo)));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertEquals(1, $crawler->filter('html:contains("success")')->count());
@@ -192,7 +192,7 @@ class PostControllerTest extends WebTestCase
                 null,
                 true
         );
-        $crawler = $client->request('POST', $this->getUrl('blog_post_upload_image'), array(), array('form[inlineUploadFile]' => $photo));
+        $crawler = $client->request('POST', $this->getUrl('blog_post_upload_image'), array(), array('form' => array('inlineUploadFile' => $photo)));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertEquals(1, $crawler->filter('html:contains("File extension is not valid")')->count());
