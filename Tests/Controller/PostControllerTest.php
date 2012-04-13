@@ -174,7 +174,7 @@ class PostControllerTest extends WebTestCase
                 null,
                 true
         );
-        $crawler = $client->request('POST', $this->getUrl('blog_post_upload_image'), array(), array('uploadForm[inlineUploadFile]' => $photo));
+        $crawler = $client->request('POST', $this->getUrl('blog_post_upload_image'), array(), array('form[inlineUploadFile]' => $photo));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertEquals(1, $crawler->filter('html:contains("success")')->count());
@@ -192,7 +192,7 @@ class PostControllerTest extends WebTestCase
                 null,
                 true
         );
-        $crawler = $client->request('POST', $this->getUrl('blog_post_upload_image'), array(), array('uploadForm[inlineUploadFile]' => $photo));
+        $crawler = $client->request('POST', $this->getUrl('blog_post_upload_image'), array(), array('form[inlineUploadFile]' => $photo));
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertEquals(1, $crawler->filter('html:contains("File extension is not valid")')->count());
