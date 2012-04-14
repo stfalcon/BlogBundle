@@ -8,10 +8,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Stfalcon\Bundle\BlogBundle\Entity\Post;
 use Stfalcon\Bundle\BlogBundle\Form\PostForm;
+use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\Collection;
 
 /**
  * PostController
@@ -211,14 +214,29 @@ class PostController extends Controller
      *
      * @return string
      * @Route("/admin/blog/uploadImage", name="blog_post_upload_image")
+     * @Method({"POST"})
      */
     public function uploadImageAction()
     {
-        $file = $this->getRequest()->files->get('inline_upload_file');
-        if ($file && $file->isValid()) {
-            $pathinfo = pathinfo($file->getClientOriginalName());
-            $ext = strtolower($pathinfo['extension']);
-            if (in_array($ext, array('jpg', 'jpeg', 'gif', 'png'))) {
+        $collectionConstraint = new Collection(array(
+            'inlineUploadFile' => new Image(array('mimeTypes' => array("image/png", "image/jpeg", "image/gif"))),
+        ));
+        $form = $this->createFormBuilder(null, array(
+            'csrf_protection' => false,
+            'validation_constraint' => $collectionConstraint
+            ))
+                ->add('inlineUploadFile', 'file')
+                ->getForm();
+
+        $form->bindRequest($this->get('request'));
+        if ($form->isValid()) {
+            $file = $form->get('inlineUploadFile')->getData();
+            $ext = $file->guessExtension();
+            if ($ext == '') {
+                $response = array(
+                    'msg' => 'Your file is not valid!',
+                );
+            } else {
                 $uploadDir = realpath($this->get('kernel')->getRootDir() . '/../web/uploads/images');
                 $newName = uniqid() . '.' . $ext;
                 $file->move($uploadDir, $newName);
@@ -229,14 +247,10 @@ class PostController extends Controller
                     'width' => $info[0],
                     'height' => $info[1],
                 );
-            } else {
-                $response = array(
-                    'msg' => 'File extension is not valid!',
-                );
             }
         } else {
             $response = array(
-                'msg' => 'Please, select proper file!',
+                'msg' => 'Your file is not valid!',
             );
         }
 
