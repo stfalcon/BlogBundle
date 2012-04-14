@@ -58,12 +58,10 @@ class PostEntityTest extends \PHPUnit_Framework_TestCase
     {
         $post = new Post();
         $tag1 = new Tag('symfony2');
-        $post->addTag($tag1);
         $tag2 = new Tag('doctrine2');
-        $post->addTag($tag2);
+        $post->setTags(array($tag1, $tag2));
 
-        $this->assertTrue($post->getTags()->contains($tag1));
-        $this->assertTrue($post->getTags()->contains($tag2));
+        $this->assertEquals($post->getTags(), array($tag1, $tag2));
         $this->assertEquals(count($post->getTags()), 2);
     }
 

@@ -162,39 +162,34 @@ class PostControllerTest extends WebTestCase
 
     public function testUploadValidImageInPost()
     {
-        $client = $this->makeClient(true);
-        $validFile = realpath($this->getContainer()->get('kernel')->getRootDir() . '/../web/images') . '/required-field.png';
-        copy($validFile, realpath($this->getContainer()->get('kernel')->getRootDir() . '/../web/images') . '/required-field_copy.png');
-        $validFile = realpath($this->getContainer()->get('kernel')->getRootDir() . '/../web/images') . '/required-field_copy.png';
-        $photo = new UploadedFile(
-                $validFile,
-                'required-field.png',
-                'image/png',
-                123,
-                null,
-                true
-        );
-        $crawler = $client->request('POST', $this->getUrl('blog_post_upload_image'), array(), array('form' => array('inlineUploadFile' => $photo)));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $file = tempnam(sys_get_temp_dir(), 'jenga.jpg');
+        copy(realpath(__DIR__ . '/../Entity/Resources/files/posts/jenga.jpg'), $file);
 
+        $photo = new UploadedFile($file, 'jenga.jpg', null, null, null, true);
+
+        $client = $this->makeClient(true);
+        $crawler = $client->request(
+            'POST', $this->getUrl('blog_post_upload_image'), array(),
+            array('form' => array('inlineUploadFile' => $photo))
+        );
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertEquals(1, $crawler->filter('html:contains("success")')->count());
     }
 
     public function testUploadInvalidImageInPost()
     {
-        $client = $this->makeClient(true);
-        $invalidFile = realpath($this->getContainer()->get('kernel')->getRootDir() . '/../web') . '/app.php';
-        $photo = new UploadedFile(
-                $invalidFile,
-                'app.php',
-                'image/jpeg',
-                123,
-                null,
-                true
-        );
-        $crawler = $client->request('POST', $this->getUrl('blog_post_upload_image'), array(), array('form' => array('inlineUploadFile' => $photo)));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $invalidFile = tempnam(sys_get_temp_dir(), 'image.jpeg');
+        copy(realpath(__DIR__ . '/../Entity/Resources/files/posts/image.php'), $invalidFile);
 
+        $photo = new UploadedFile($invalidFile, 'image.jpeg', null, null, null, true);
+
+        $client = $this->makeClient(true);
+        $crawler = $client->request(
+            'POST', $this->getUrl('blog_post_upload_image'), array(),
+            array('form' => array('inlineUploadFile' => $photo)));
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertEquals(1, $crawler->filter('html:contains("Your file is not valid")')->count());
     }
 }

@@ -232,6 +232,7 @@ class PostController extends Controller
         if ($form->isValid()) {
             $file = $form->get('inlineUploadFile')->getData();
             $ext = $file->guessExtension();
+
             if ($ext == '') {
                 $response = array(
                     'msg' => 'Your file is not valid!',
@@ -241,6 +242,7 @@ class PostController extends Controller
                 $newName = uniqid() . '.' . $ext;
                 $file->move($uploadDir, $newName);
                 $info = getImageSize($uploadDir . '/' . $newName);
+
                 $response = array(
                     'status' => 'success',
                     'src' => '/uploads/images/' . $newName,

@@ -118,25 +118,13 @@ class Post
     }
 
     /**
-     * Add tag to post
-     *
-     * @param Tag $tag A tag object
-     *
-     * @return void
-     */
-    public function addTag(Tag $tag)
-    {
-        $this->tags[] = $tag;
-    }
-
-    /**
      * Set tags to post
      *
-     * @param \Doctrine\Common\Collections\Collection $tags Tags collection
+     * @param $tags Tags collection
      *
      * @return void
      */
-    public function setTags(\Doctrine\Common\Collections\Collection $tags)
+    public function setTags($tags)
     {
         $this->tags = $tags;
     }
