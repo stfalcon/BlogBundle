@@ -39,7 +39,7 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
         $postaboutphp->setTitle('Post about php');
         $postaboutphp->setSlug('post-about-php');
         $postaboutphp->setText('The PHP development team would like to announce the immediate availability of PHP 5.3.6.');
-        $postaboutphp->addTag($manager->merge($this->getReference('tag-php')));
+        $postaboutphp->setTags(array($manager->merge($this->getReference('tag-php'))));
         $manager->persist($postaboutphp);
 
         $manager->flush();
