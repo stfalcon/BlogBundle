@@ -45,51 +45,6 @@ class PostController extends Controller
     }
 
     /**
-     * Projects list
-     *
-     * @return array
-     * @Route("/admin/blog/posts", name="blog_post_index")
-     * @Template()
-     */
-    public function listAction()
-    {
-        $posts = $this->get('doctrine')->getEntityManager()
-                ->getRepository("StfalconBlogBundle:Post")->getAllPosts();
-
-        return array('posts' => $posts);
-    }
-
-    /**
-     * Create new post
-     *
-     * @return array|RedirectResponse
-     * @Route("/admin/blog/post/create", name="blog_post_create")
-     * @Template()
-     */
-    public function createAction()
-    {
-        $post = new Post();
-        $form = $this->get('form.factory')->create(new PostForm(), $post);
-
-        $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($this->get('request'));
-            if ($form->isValid()) {
-                $em = $this->get('doctrine')->getEntityManager();
-                $em->persist($post);
-                $em->flush();
-
-                $this->get('request')->getSession()->setFlash('notice',
-                    'Congratulations, your post is successfully created!'
-                );
-                return new RedirectResponse($this->generateUrl('blog_post_index'));
-            }
-        }
-
-        return array('form' => $form->createView());
-    }
-
-    /**
      * View post
      *
      * @param Post $post
@@ -109,58 +64,6 @@ class PostController extends Controller
         return array(
             'post' => $post,
         );
-    }
-
-    /**
-     * Edit post
-     *
-     * @param Post $post
-     *
-     * @return RedirectResponse
-     * @Route("/admin/blog/post/edit/{slug}", name="blog_post_edit")
-     * @Template()
-     */
-    public function editAction(Post $post)
-    {
-        $form = $this->get('form.factory')->create(new PostForm(), $post);
-
-        $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
-
-            if ($form->isValid()) {
-                // save project
-                $em = $this->get('doctrine')->getEntityManager();
-                $em->persist($post);
-
-                $em->flush();
-
-                $this->get('request')->getSession()->setFlash('notice',
-                    'Congratulations, your post is successfully updated!'
-                );
-                return new RedirectResponse($this->generateUrl('blog_post_index'));
-            }
-        }
-
-        return array('form' => $form->createView(), 'post' => $post);
-    }
-
-    /**
-     * Delete post
-     *
-     * @param Post $post
-     *
-     * @return RedirectResponse
-     * @Route("/admin/blog/post/delete/{slug}", name="blog_post_delete")
-     */
-    public function deleteAction($post)
-    {
-        $em = $this->get('doctrine')->getEntityManager();
-        $em->remove($post);
-        $em->flush();
-
-        $this->get('request')->getSession()->setFlash('notice', 'Your post is successfully delete.');
-        return new RedirectResponse($this->generateUrl('blog_post_index'));
     }
 
     /**
@@ -207,7 +110,6 @@ class PostController extends Controller
 
         return array('posts' => $posts);
     }
-
 
     /**
      * Upload photo
