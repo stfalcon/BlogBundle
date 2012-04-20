@@ -13,7 +13,6 @@ class TagAdmin extends Admin
     {
         $formMapper
             ->add('text')
-            ->add('posts')
         ;
     }
 
