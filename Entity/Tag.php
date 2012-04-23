@@ -87,18 +87,6 @@ class Tag
     }
 
     /**
-     * Set posts collection to tag
-     *
-     * @param \Doctrine\Common\Collections\Collection $posts Post collection
-     *
-     * @return void
-     */
-    public function setPosts($posts)
-    {
-        $this->posts = $posts;
-    }
-
-    /**
      * Get posts for this tag
      *
      * @return ArrayCollection

@@ -139,23 +139,13 @@ class PostControllerTest extends WebTestCase
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $post = $em->getRepository("StfalconBlogBundle:Post")->findOneBy(array('slug' => 'post-about-php'));
 
-        // delete category
+        // delete post
         $crawler = $client->request('POST', $this->getUrl('admin_bundle_blog_post_delete', array('id' => $post->getId())), array('_method' => 'DELETE'));
 
-        // check redirect to list of posts
-        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('admin_bundle_blog_post_list', array())));
-
-        $crawler = $client->followRedirect();
-
-        // check responce
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertFalse($client->getResponse()->isRedirect());
-
-        // check notice
-//        $this->assertTrue($client->getRequest()->getSession()->hasFlash('notice'));
-
-        // check don't display deleting post
-        $this->assertEquals(0, $crawler->filter('table tbody tr td:contains("post-about-php")')->count());
+        // check if post was removed from DB
+        $em->detach($post);
+        $postRemoved = $em->getRepository("StfalconBlogBundle:Post")->findOneBy(array('slug' => 'post-about-php'));
+        $this->assertNull($postRemoved);
     }
 
     public function testPostListForUser()
