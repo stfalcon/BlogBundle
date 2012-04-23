@@ -95,5 +95,4 @@ class Tag
     {
         return $this->posts;
     }
-
 }

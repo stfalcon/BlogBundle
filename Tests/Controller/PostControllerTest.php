@@ -16,29 +16,32 @@ class PostControllerTest extends WebTestCase
     public function testEmptyPostsListForAdmin()
     {
         $this->loadFixtures(array());
-        $crawler = $this->fetchCrawler($this->getUrl('blog_post_index', array()), 'GET', true, true);
+        $crawler = $this->fetchCrawler($this->getUrl('admin_bundle_blog_post_list', array()), 'GET', true, true);
 
-        // check display notice
-        $this->assertEquals(1, $crawler->filter('html:contains("List of posts is empty")')->count());
         // check don't display categories
-        $this->assertEquals(0, $crawler->filter('ul li:contains("My first post")')->count());
+        $this->assertEquals(0, $crawler->filter('table tbody tr')->count());
     }
 
     public function testCreateNewPost()
     {
         $this->loadFixtures(array());
         $client = $this->makeClient(true);
-        $crawler = $client->request('GET', $this->getUrl('blog_post_create', array()));
+        $crawler = $client->request('GET', $this->getUrl('admin_bundle_blog_post_create', array()));
 
-        $form = $crawler->selectButton('Send')->form();
+        $inputs = $crawler->filter('form input');
+        $inputs->first();
+        $formId = str_replace("_slug", "", $inputs->current()->getAttribute('id'));
 
-        $form['post[title]'] = 'Post title';
-        $form['post[slug]'] = 'post-slug';
-        $form['post[text]'] = 'Post text';
+        $form = $crawler->selectButton('Создать и редактировать')->form();
+
+        $form[$formId . '[title]'] = 'Post title';
+        $form[$formId . '[slug]'] = 'post-slug';
+        $form[$formId . '[text]'] = 'Post text';
+        $form[$formId . '[tags]'] = 'Post,tags';
         $crawler = $client->submit($form);
 
         // check redirect to list of post
-        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('blog_post_index', array())));
+        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('admin_bundle_blog_post_edit', array('id' => 1) )));
 
         $crawler = $client->followRedirect();
 
@@ -46,8 +49,9 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertFalse($client->getResponse()->isRedirect());
 
+        $crawler = $this->fetchCrawler($this->getUrl('admin_bundle_blog_post_list', array()), 'GET', true, true);
         // check display new category in list
-        $this->assertEquals(1, $crawler->filter('ul li:contains("Post title")')->count());
+        $this->assertEquals(1, $crawler->filter('table tbody tr td:contains("Post title")')->count());
     }
 
     public function testNotEmptyPostListForAdmin()
@@ -55,10 +59,10 @@ class PostControllerTest extends WebTestCase
         $this->loadFixtures(array(
                 'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadTagData',
                 'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
-        $crawler = $this->fetchCrawler($this->getUrl('blog_post_index', array()), 'GET', true, true);
+        $crawler = $this->fetchCrawler($this->getUrl('admin_bundle_blog_post_list', array()), 'GET', true, true);
 
         // check display posts list
-        $this->assertEquals(1, $crawler->filter('ul li:contains("My first post")')->count());
+        $this->assertEquals(1, $crawler->filter('table tbody tr td:contains("My first post")')->count());
     }
 
     public function testViewPost()
@@ -94,18 +98,26 @@ class PostControllerTest extends WebTestCase
                 'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadTagData',
                 'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
         $client = $this->makeClient(true);
-        $crawler = $client->request('GET', $this->getUrl('blog_post_edit', array('slug' => 'my-first-post')));
 
-        $form = $crawler->selectButton('Save')->form();
+        $em = $this->getContainer()->get('doctrine')->getEntityManager();
+        $post = $em->getRepository("StfalconBlogBundle:Post")->findOneBy(array('slug' => 'post-about-php'));
 
-        $form['post[title]'] = 'New post title';
-        $form['post[slug]'] = 'new-post-slug';
-        $form['post[text]'] = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..';
-        $form['post[tags]'] = 'php, symfony2, etc';
+        $crawler = $client->request('GET', $this->getUrl('admin_bundle_blog_post_edit', array('id' => $post->getId())));
+
+        $inputs = $crawler->filter('form input');
+        $inputs->first();
+        $formId = str_replace("_slug", "", $inputs->current()->getAttribute('id'));
+
+        $form = $crawler->selectButton('Сохранить')->form();
+
+        $form[$formId . '[title]'] = 'New post title';
+        $form[$formId . '[slug]'] = 'new-post-slug';
+        $form[$formId . '[text]'] = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..';
+        $form[$formId . '[tags]'] = 'php, symfony2, etc';
         $crawler = $client->submit($form);
 
         // check redirect to list of categories
-        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('blog_post_index', array())));
+        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('admin_bundle_blog_post_edit', array('id' => $post->getId()) )));
 
         $crawler = $client->followRedirect();
 
@@ -113,7 +125,8 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertFalse($client->getResponse()->isRedirect());
 
-        $this->assertEquals(1, $crawler->filter('ul li:contains("New post title")')->count());
+        $crawler = $this->fetchCrawler($this->getUrl('admin_bundle_blog_post_list', array()), 'GET', true, true);
+        $this->assertEquals(1, $crawler->filter('table tbody tr td:contains("New post title")')->count());
     }
 
     public function testDeletePost()
@@ -122,8 +135,17 @@ class PostControllerTest extends WebTestCase
                 'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadTagData',
                 'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostData'));
         $client = $this->makeClient(true);
+
+        $em = $this->getContainer()->get('doctrine')->getEntityManager();
+        $post = $em->getRepository("StfalconBlogBundle:Post")->findOneBy(array('slug' => 'post-about-php'));
+
         // delete post
-        $crawler = $client->request('GET', $this->getUrl('blog_post_delete', array('slug' => 'my-first-post')));
+        $crawler = $client->request('POST', $this->getUrl('admin_bundle_blog_post_delete', array('id' => $post->getId())), array('_method' => 'DELETE'));
+
+        // check if post was removed from DB
+        $em->detach($post);
+        $postRemoved = $em->getRepository("StfalconBlogBundle:Post")->findOneBy(array('slug' => 'post-about-php'));
+        $this->assertNull($postRemoved);
     }
 
     public function testPostListForUser()

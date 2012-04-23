@@ -305,5 +305,4 @@ class Post
     {
         return $this->commentsCount;
     }
-
 }
