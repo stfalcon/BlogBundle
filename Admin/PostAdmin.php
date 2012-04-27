@@ -14,7 +14,7 @@ class PostAdmin extends Admin
         $formMapper
             ->add('slug')
             ->add('title')
-            ->add('text', 'textarea', array('attr' => array("class" => 'xxlarge')))
+            ->add('text')
             ->add('tags', 'tags')
         ;
     }
@@ -25,7 +25,6 @@ class PostAdmin extends Admin
             ->addIdentifier('slug')
             ->add('title')
             ->add('created')
-            ->add('commentsCount')
         ;
     }
 }
