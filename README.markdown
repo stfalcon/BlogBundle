@@ -18,6 +18,7 @@ The bulk of the documentation is stored in the `Resources/doc/index.md`
 file in this bundle:
 
 [Read the Documentation for master](https://github.com/stfalcon/BlogBundle/blob/master/Resources/doc/index.md)
+
 [Read the Documentation for master (Russian language)](https://github.com/stfalcon/BlogBundle/blob/master/Resources/doc/index_ru.md)
 
 Installation
