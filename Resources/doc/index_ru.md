@@ -5,6 +5,8 @@
 * DoctrineExtensionsBundle - https://github.com/stof/DoctrineExtensionsBundle/blob/master/Resources/doc/index.rst
 * FunctionalTestBundle - https://github.com/liip/FunctionalTestBundle/blob/master/README.md
 * DoctrineFixturesBundle - https://github.com/symfony/DoctrineFixturesBundle
+* SonataAdminBundle - https://github.com/sonata-project/SonataAdminBundle
+* SonataDoctrineORMAdminBundle - https://github.com/sonata-project/SonataDoctrineORMAdminBundle
 
 ### Тянем исходники BlogBundle
 
@@ -39,18 +41,18 @@
 
     # app/config/routing.yml
     _blog:
-        resource: "@StfalconBlogBundle/Resources/config/routing.yml"    
+        resource: "@StfalconBlogBundle/Resources/config/routing.yml"
 
 
 ### Создаем или обновляем схему БД
 
     ./app/console doctrine:schema:create
 
-### Создаем слои для проекта. 
+### Создаем слои для проекта.
 
 По умолчанию контент передается в блоке content. Если в вашем основном слое используется другой блок, тогда можно обернуть в него контент. Например вы подключаете BlogBundle к проекту symfony-standart:
 
-    # app/Resources/views/stfalcon_blog_layout.html.twig
+    # app/Resources/views/layout.html.twig
     {% extends '::base.html.twig' %}
 
     {% block body %}
@@ -59,9 +61,9 @@
 
 Для проекта портфолио https://github.com/stfalcon/portfolio я использую следующий шаблон:
 
-    # app/Resources/views/stfalcon_blog_layout.html.twig
+    # app/Resources/views/layout.html.twig
     {% extends '::layout.html.twig' %}
-    
+
 ### Копируем ресурсы в директорию web:
 
     ./app/console assets:install web
