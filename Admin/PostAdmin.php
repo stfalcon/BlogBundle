@@ -12,8 +12,8 @@ class PostAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('slug')
             ->add('title')
+            ->add('slug')
             ->add('text')
             ->add('tags', 'tags')
         ;

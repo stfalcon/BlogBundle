@@ -3,7 +3,7 @@
 namespace Stfalcon\Bundle\BlogBundle\Bridge\Doctrine\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Stfalcon\Bundle\BlogBundle\Bridge\Doctrine\Form\DataTransformer\EntitiesToStringTransformer;
 
@@ -32,12 +32,12 @@ class TagsType extends AbstractType
     /**
      * Builds the form.
      *
-     * @param FormBuilder $builder The form builder
-     * @param array       $options The options
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
      *
      * @return void
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->prependClientTransformer(
             new EntitiesToStringTransformer($this->registry->getEntityManager())
@@ -47,13 +47,11 @@ class TagsType extends AbstractType
     /**
      * Returns the name of the parent type.
      *
-     * @param array $options The options
-     *
      * @return string
      */
-    public function getParent(array $options)
+    public function getParent()
     {
-        return 'field';
+        return 'text';
     }
 
     /**

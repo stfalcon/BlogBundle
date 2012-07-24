@@ -28,11 +28,8 @@ class PostControllerTest extends WebTestCase
         $client = $this->makeClient(true);
         $crawler = $client->request('GET', $this->getUrl('admin_bundle_blog_post_create', array()));
 
-        $inputs = $crawler->filter('form input');
-        $inputs->first();
-        $formId = str_replace("_slug", "", $inputs->current()->getAttribute('id'));
-
         $form = $crawler->selectButton('Создать и редактировать')->form();
+        $formId = substr($form->getUri(), -14);
 
         $form[$formId . '[title]'] = 'Post title';
         $form[$formId . '[slug]'] = 'post-slug';
@@ -104,11 +101,8 @@ class PostControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', $this->getUrl('admin_bundle_blog_post_edit', array('id' => $post->getId())));
 
-        $inputs = $crawler->filter('form input');
-        $inputs->first();
-        $formId = str_replace("_slug", "", $inputs->current()->getAttribute('id'));
-
         $form = $crawler->selectButton('Сохранить')->form();
+        $formId = substr($form->getUri(), -14);
 
         $form[$formId . '[title]'] = 'New post title';
         $form[$formId . '[slug]'] = 'new-post-slug';
