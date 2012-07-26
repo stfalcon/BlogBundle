@@ -76,16 +76,7 @@ class EntitiesToStringTransformer implements DataTransformerInterface
             throw new UnexpectedTypeException($data, 'string');
         }
 
-        $tags = explode(',', $data);
-        // strip whitespaces from beginning and end of a tag text
-        foreach ($tags as &$text) {
-            $text = trim($text);
-        }
-        unset($text);
-        // removes duplicates
-        $tags = array_unique($tags);
-
-        foreach ($tags as $text) {
+        foreach ($this->_stringToArray($data) as $text) {
             $tag = $this->em->getRepository("StfalconBlogBundle:Tag")
                     ->findOneBy(array('text' => $text));
             if (!$tag) {
@@ -96,6 +87,23 @@ class EntitiesToStringTransformer implements DataTransformerInterface
         }
 
         return $collection;
+    }
+
+    /**
+     * Convert string of tags to array
+     *
+     * @param string $string
+     */
+    private function _stringToArray($string)
+    {
+        $tags = explode(',', $string);
+        // strip whitespaces from beginning and end of a tag text
+        foreach ($tags as &$text) {
+            $text = trim($text);
+        }
+
+        // removes duplicates
+        return array_unique($tags);
     }
 
 }
