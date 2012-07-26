@@ -27,7 +27,7 @@ class PostAdminTest extends WebTestCase
         $client = $this->makeClient(true);
         $crawler = $client->request('GET', $this->getUrl('admin_bundle_blog_post_create', array()));
 
-        $form = $crawler->selectButton('Создать и редактировать')->form();
+        $form = $crawler->selectButton('btn_create_and_edit')->form();
         $formId = substr($form->getUri(), -14);
 
         $form[$formId . '[title]'] = 'Post title';
@@ -73,7 +73,7 @@ class PostAdminTest extends WebTestCase
 
         $crawler = $client->request('GET', $this->getUrl('admin_bundle_blog_post_edit', array('id' => $post->getId())));
 
-        $form = $crawler->selectButton('Сохранить')->form();
+        $form = $crawler->selectButton('btn_update_and_edit')->form();
         $formId = substr($form->getUri(), -14);
 
         $form[$formId . '[title]'] = 'New post title';
