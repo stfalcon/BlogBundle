@@ -20,14 +20,18 @@ class PostController extends Controller
     /**
      * List of posts for admin
      *
+     * @param int      $page     Page number
+     *
      * @return array
-     * @Route("/blog", name="blog")
+     * @Route("/blog/{page}", name="blog", requirements={"page" = "\d+"}, defaults={"page" = "1"} )
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page)
     {
-        $posts = $this->get('doctrine')->getEntityManager()
+        $allPosts = $this->get('doctrine')->getEntityManager()
                 ->getRepository("StfalconBlogBundle:Post")->getAllPosts();
+
+         $posts= $this->get('knp_paginator')->paginate($allPosts, $page, 10);
 
         if ($this->has('application_default.menu.breadcrumbs')) {
             $breadcrumbs = $this->get('application_default.menu.breadcrumbs');
