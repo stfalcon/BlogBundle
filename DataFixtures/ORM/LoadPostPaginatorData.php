@@ -30,6 +30,7 @@ class LoadPostPaginatorData extends AbstractFixture implements OrderedFixtureInt
                 $postforpaginator->setTitle('Post for paginator '.$i);
                 $postforpaginator->setSlug('post-for-paginator-'.$i);
                 $postforpaginator->setText('Generally this bundle is based on Knp Pager component. This component introduces a different way for pagination handling. You can read more about the internal logic on the given documentation link.'.$i);
+                $postforpaginator->setTags(array($manager->merge($this->getReference('tag-php'))));
                 $manager->persist($postforpaginator);
         }
 

@@ -1,15 +1,17 @@
 <?php
 
-namespace StfalconBundle\Bundle\BlogBundle\Tests\Controller;
+namespace Stfalcon\Bundle\BlogBundle\Tests\Controller;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+//require_once(dirname(__FILE__).'/AbstractTestCase.php');
+//use Stfalcon\Bundle\BlogBundle\Tests\Controller\AbstractTestCase;
+//use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
  * Test cases for TagController
  *
  * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
-class TagControllerTest extends WebTestCase
+class TagControllerTest extends AbstractTestCase
 {
 
     public function testViewTag()
@@ -38,6 +40,11 @@ class TagControllerTest extends WebTestCase
         $crawler = $client->request('GET', $this->getUrl('blog_tag_view', array('text' => 'not-exist-tag')));
 
         $this->assertTrue($client->getResponse()->isNotFound());
+    }
+
+    public function testTagPagination()
+    {
+        $this->paginationCheck('blog_tag_view', 'php');
     }
 
 }

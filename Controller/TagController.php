@@ -20,13 +20,16 @@ class TagController extends Controller
      * View tag
      *
      * @param Tag $tag
+     * @param int      $page     Page number
      *
      * @return array
-     * @Route("/blog/tag/{text}", name="blog_tag_view")
+     * @Route("/blog/tag/{text}/{page}", name="blog_tag_view", requirements={"page" = "\d+"}, defaults={"page" = "1"})
      * @Template()
      */
-    public function viewAction(Tag $tag)
+    public function viewAction(Tag $tag, $page)
     {
+        $posts = $this->get('knp_paginator')->paginate($tag->getPosts(), $page, 10);
+
         if ($this->has('menu.breadcrumbs')) {
             $breadcrumbs = $this->get('menu.breadcrumbs');
             $breadcrumbs->addChild('Блог', $this->get('router')->generate('blog'));
@@ -35,6 +38,7 @@ class TagController extends Controller
 
         return array(
             'tag' => $tag,
+            'posts' => $posts,
         );
     }
 

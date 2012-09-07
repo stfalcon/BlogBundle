@@ -1,7 +1,7 @@
 {% extends 'StfalconBlogBundle::layout.html.twig' %}
 
 {% block content %}
-    {% if tag.posts %}
-        {% include 'StfalconBlogBundle:Post:_posts.html.twig' with {'posts': tag.posts} %}
+    {% if posts %}
+        {% include 'StfalconBlogBundle:Post:_posts.html.twig' with {'posts': posts} %}
     {% endif %}
 {% endblock %}
