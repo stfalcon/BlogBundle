@@ -31,7 +31,9 @@ class PostController extends Controller
         $allPosts = $this->get('doctrine')->getEntityManager()
                 ->getRepository("StfalconBlogBundle:Post")->getAllPosts();
 
-         $posts= $this->get('knp_paginator')->paginate($allPosts, $page, 10);
+        $pageRange = $this->container->getParameter('page_range');
+
+         $posts= $this->get('knp_paginator')->paginate($allPosts, $page, $pageRange);
 
         if ($this->has('application_default.menu.breadcrumbs')) {
             $breadcrumbs = $this->get('application_default.menu.breadcrumbs');

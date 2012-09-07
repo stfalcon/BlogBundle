@@ -28,7 +28,8 @@ class TagController extends Controller
      */
     public function viewAction(Tag $tag, $page)
     {
-        $posts = $this->get('knp_paginator')->paginate($tag->getPosts(), $page, 10);
+        $pageRange = $this->container->getParameter('page_range');
+        $posts = $this->get('knp_paginator')->paginate($tag->getPosts(), $page, $pageRange);
 
         if ($this->has('menu.breadcrumbs')) {
             $breadcrumbs = $this->get('menu.breadcrumbs');
