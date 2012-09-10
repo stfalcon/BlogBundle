@@ -23,7 +23,7 @@ class TagController extends Controller
      * @param int      $page     Page number
      *
      * @return array
-     * @Route("/blog/tag/{text}/{page}", name="blog_tag_view", requirements={"page" = "\d+"}, defaults={"page" = "1"})
+     * @Route("/blog/tag/{text}/{title}/{page}", name="blog_tag_view", requirements={"page" = "\d+"}, defaults={"page" = "1", "title" = "page"})
      * @Template()
      */
     public function viewAction(Tag $tag, $page)

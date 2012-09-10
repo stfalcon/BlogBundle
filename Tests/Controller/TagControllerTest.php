@@ -2,9 +2,6 @@
 
 namespace Stfalcon\Bundle\BlogBundle\Tests\Controller;
 
-//require_once(dirname(__FILE__).'/AbstractTestCase.php');
-//use Stfalcon\Bundle\BlogBundle\Tests\Controller\AbstractTestCase;
-//use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Application\Bundle\DefaultBundle\Tests\Controller\AbstractTestCase;
 
 /**

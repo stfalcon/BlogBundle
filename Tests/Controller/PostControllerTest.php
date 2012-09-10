@@ -2,9 +2,7 @@
 
 namespace Stfalcon\Bundle\BlogBundle\Tests\Controller;
 
-//use Stfalcon\Bundle\BlogBundle\Tests\Controller\AbstractTestCase;
 use Application\Bundle\DefaultBundle\Tests\Controller\AbstractTestCase;
-//use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
  * Test cases for PostController

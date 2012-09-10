@@ -23,7 +23,7 @@ class PostController extends Controller
      * @param int      $page     Page number
      *
      * @return array
-     * @Route("/blog/{page}", name="blog", requirements={"page" = "\d+"}, defaults={"page" = "1"} )
+     * @Route("/blog/{title}/{page}", name="blog", requirements={"page" = "\d+"}, defaults={"page" = "1", "title" = "page"} )
      * @Template()
      */
     public function indexAction($page)
