@@ -5,6 +5,7 @@ namespace Stfalcon\Bundle\BlogBundle\Tests\Controller;
 //require_once(dirname(__FILE__).'/AbstractTestCase.php');
 //use Stfalcon\Bundle\BlogBundle\Tests\Controller\AbstractTestCase;
 //use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Application\Bundle\DefaultBundle\Tests\Controller\AbstractTestCase;
 
 /**
  * Test cases for TagController
@@ -44,7 +45,12 @@ class TagControllerTest extends AbstractTestCase
 
     public function testTagPagination()
     {
-        $this->paginationCheck('blog_tag_view', 'php');
+        $this->loadFixtures(array(
+                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadTagData',
+                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostPaginatorData'));
+
+
+        $this->paginationCheck('blog_tag_view', 'text', 'php', 'post', 10);
     }
 
 }

@@ -15,27 +15,23 @@ abstract class AbstractTestCase extends WebTestCase
  * Abstract pagination test method for both post an
  *
  */
-    protected function paginationCheck($crawled_url, $text)
+    protected function paginationCheck($crawledUrl, $extraParamName, $extraParamValue, $postUnit, $postNumber)
     {
         $client = static::createClient();
-        
-        $this->loadFixtures(array(
-                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadTagData',
-                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostPaginatorData'));
 
         $crawler = $this->fetchCrawler(
-                $this->getUrl($crawled_url, array('text' => $text, 'page' => '1')), 'GET', true, true
+                $this->getUrl($crawledUrl, array($extraParamName => $extraParamValue, 'page' => '1')), 'GET', true, true
         );
 
         $this->assertEquals(1, $crawler->filter('.pagination .current:contains("1")')->count());
-        $this->assertEquals(10, $crawler->filter('.post')->count());
+        $this->assertEquals($postNumber, $crawler->filter('.'.$postUnit.'')->count());
         $this->assertEquals(5, $crawler->filter('.pagination span')->count());
         $this->assertEquals(0, $crawler->filter('span.first a')->count());
         $this->assertEquals(0, $crawler->filter('span.previous a')->count());
 
 
         $crawler = $this->fetchCrawler(
-                $this->getUrl($crawled_url, array('text' => $text, 'page' => '2')), 'GET', true, true
+                $this->getUrl($crawledUrl, array($extraParamName => $extraParamValue, 'page' => '2')), 'GET', true, true
         );
 
         $this->assertEquals(1, $crawler->filter('.pagination .current:contains("2")')->count());
@@ -48,12 +44,12 @@ abstract class AbstractTestCase extends WebTestCase
 
 
         $crawler = $this->fetchCrawler(
-                $this->getUrl('blog', array('page'=> 3)), 'GET', true, true
+                $this->getUrl($crawledUrl, array($extraParamName => $extraParamValue, 'page' => '3')), 'GET', true, true
         );
 
         $this->assertEquals(1, $crawler->filter('.pagination .current:contains("3")')->count());
         $this->isLinkClickableByNumber($client, $crawler, 2, 2);
-        $this->assertEquals(10, $crawler->filter('.post')->count());
+        $this->assertEquals($postNumber, $crawler->filter('.'.$postUnit.'')->count());
         $this->assertEquals(0, $crawler->filter('span.last a')->count());
         $this->assertEquals(0, $crawler->filter('span.next a')->count());
 

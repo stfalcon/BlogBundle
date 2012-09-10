@@ -2,7 +2,8 @@
 
 namespace Stfalcon\Bundle\BlogBundle\Tests\Controller;
 
-use Stfalcon\Bundle\BlogBundle\Tests\Controller\AbstractTestCase;
+//use Stfalcon\Bundle\BlogBundle\Tests\Controller\AbstractTestCase;
+use Application\Bundle\DefaultBundle\Tests\Controller\AbstractTestCase;
 //use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
@@ -76,7 +77,11 @@ class PostControllerTest extends AbstractTestCase
 
     public function testBlogPagination()
     {
-        $this->paginationCheck('blog', 'php');
-     }
+        $this->loadFixtures(array(
+                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadTagData',
+                'Stfalcon\Bundle\BlogBundle\DataFixtures\ORM\LoadPostPaginatorData'));
+
+        $this->paginationCheck('blog', '', '', 'post', 10);
+    }
 
 }
