@@ -31,7 +31,7 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
         $postfirst->setText('In work we use Symfony2.<!--more-->And text after cut');
         $postfirst->setTags(array(
             $manager->merge($this->getReference('tag-symfony2')),
-            $manager->merge($this->getReference('tag-doctrine2'))
+            $manager->merge($this->getReference('tag-doctrine2')),
         ));
         $manager->persist($postfirst);
 
@@ -39,7 +39,10 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
         $postaboutphp->setTitle('Post about php');
         $postaboutphp->setSlug('post-about-php');
         $postaboutphp->setText('The PHP development team would like to announce the immediate availability of PHP 5.3.6.');
-        $postaboutphp->setTags(array($manager->merge($this->getReference('tag-php'))));
+        $postaboutphp->setTags(array(
+            $manager->merge($this->getReference('tag-symfony2')),
+            $manager->merge($this->getReference('tag-php')))
+        );
         $manager->persist($postaboutphp);
 
         $manager->flush();

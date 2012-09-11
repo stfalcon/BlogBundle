@@ -24,14 +24,15 @@ class LoadPostPaginatorData extends AbstractFixture implements OrderedFixtureInt
      */
     public function load(ObjectManager $manager)
     {
-        for ($i=0; $i<30; $i++)
+        for ($i=1; $i<=12; $i++)
         {
-                $postforpaginator = new Post();
-                $postforpaginator->setTitle('Post for paginator '.$i);
-                $postforpaginator->setSlug('post-for-paginator-'.$i);
-                $postforpaginator->setText('Generally this bundle is based on Knp Pager component. This component introduces a different way for pagination handling. You can read more about the internal logic on the given documentation link.'.$i);
-                $postforpaginator->setTags(array($manager->merge($this->getReference('tag-php'))));
-                $manager->persist($postforpaginator);
+            $post = new Post();
+            $post->setTitle('Post for paginator #'.$i);
+            $post->setSlug('post-for-paginator-'.$i);
+            $post->setText('Generally this bundle is based on Knp Pager component. This component introduces a different way for pagination handling. You can read more about the internal logic on the given documentation link.'.$i);
+            $post->setTags(array($manager->merge($this->getReference('tag-php'))));
+
+            $manager->persist($post);
         }
 
         $manager->flush();
@@ -44,7 +45,7 @@ class LoadPostPaginatorData extends AbstractFixture implements OrderedFixtureInt
      */
     public function getOrder()
     {
-        return 2; // the order in which fixtures will be loaded
+        return 3; // the order in which fixtures will be loaded
     }
 
 }

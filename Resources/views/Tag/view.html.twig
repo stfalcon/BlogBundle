@@ -3,6 +3,7 @@
 {% block content %}
     {% if posts %}
         {% include 'StfalconBlogBundle:Post:_posts.html.twig' with {'posts': posts} %}
+
         {{ posts.render()|raw }}
     {% endif %}
 {% endblock %}
