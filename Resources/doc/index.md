@@ -46,6 +46,19 @@ public function registerBundles()
     $bundles = array(
         // ...
         new Stfalcon\Bundle\BlogBundle\StfalconBlogBundle(),
+
+        // for use KnpMenuBundle
+        new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+        
+        // for use StofDoctrineExtensionsBundle
+        new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+        
+        // for use SonataAdminBundle
+        new Sonata\CacheBundle\SonataCacheBundle(),
+        new Sonata\BlockBundle\SonataBlockBundle(),
+        new Sonata\AdminBundle\SonataAdminBundle(),
+        new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+        new Sonata\jQueryBundle\SonatajQueryBundle(),
     );
 }
 ```
