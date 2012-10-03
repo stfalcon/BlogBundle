@@ -69,7 +69,7 @@ admin:
 _sonata_admin:
     resource: .
     type: sonata_admin
-    prefix: /admin    
+    prefix: /admin
 ```
 
 Add following lines to your config file:
@@ -96,11 +96,8 @@ stof_doctrine_extensions:
     default_locale: en_US
     orm:
         default:
-            loggable: false
             sluggable: true
             timestampable: true
-            translatable: false
-            tree: false
 ```
 
 ### Step 4: Configure a pagination
