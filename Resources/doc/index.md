@@ -33,7 +33,7 @@ Installation is a quick 4 step process:
 }
 ```
 
-### Step 2: Enable the bundle
+### Step 2: Enable the StfalconBlogBundle and requiremented bundles
 
 Finally, enable the bundle in the kernel:
 
