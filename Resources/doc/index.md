@@ -8,11 +8,11 @@ Simple small bundle for simple blogs
 This version of the bundle requires:
 
 1. Symfony >= 2.0
-2. LiipFunctionalTestBundle for testing
-3. DoctrineFixturesBundle for fixtures
+2. LiipFunctionalTestBundle for testing (optional)
+3. DoctrineFixturesBundle for fixtures (optional)
 4. SonataAdminBundle for administering
 5. StofDoctrineExtensionsBundle for timestamps
-6. KnpPaginatorBundle for automate pagination
+6. KnpPaginatorBundle for pagination
 
 ## Installation
 
@@ -49,6 +49,9 @@ public function registerBundles()
 
         // for use KnpMenuBundle
         new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+        
+        // for use KnpPaginatorBundle
+        new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         
         // for use StofDoctrineExtensionsBundle
         new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
@@ -112,7 +115,7 @@ stof_doctrine_extensions:
             timestampable: true
 ```
 
-### Step 4: Update your database schema
+### Step 4: Update your database schema and install assets
 
 Now that the bundle is configured, the last thing you need to do is update your
 database schema because you have added a two new entities, the `Post` and the `Tag`.
@@ -121,5 +124,6 @@ Run the following command.
 
 ``` bash
 $ php app/console doctrine:schema:update --force
+$ php app/console assets:install
 ```
 Now that you have completed the installation and configuration of the BlogBundle!
