@@ -96,24 +96,8 @@ stof_doctrine_extensions:
     default_locale: en_US
     orm:
         default:
-            sluggable: true
             timestampable: true
 ```
-
-### Step 4: Configure a pagination
-
-Set a number of items you intend to show per page.
-
-Add a new line to parameters:
-
-In YAML:
-
-``` yaml
-# app/config/parameters.yml
-parameters:
-    page_range: 10
-
-
 
 ### Step 4: Update your database schema
 
