@@ -14,7 +14,7 @@
         <a href="http://blog.stfalcon.com">Степан Танасийчук</a>,
     </li>#}
     <li class="comments">
-        <a href="{{ path('blog_post_view', { 'slug': post.slug }) }}#disqus_thread" data-disqus-identifier="stfalcon-studio_post_{{ post.id }}">
+        <a href="{{ path('blog_post_view', { 'slug': post.slug }) }}#disqus_thread" data-disqus-identifier="{{ post.id }}">
             {{ 'Комментировать'|trans }}
         </a>
     </li>
@@ -36,7 +36,7 @@
         </div>
 
         <div class="twitter-button">
-            <a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="stfalcon">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>            
+            <a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
         </div>
 
         <div class="facebook-like">
@@ -50,7 +50,7 @@
               fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));</script>
 
-            <div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>        
+            <div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
         </div>
 
     </li>

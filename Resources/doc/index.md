@@ -77,7 +77,7 @@ In YAML:
 # app/config/routing.yml
 _stfalcon_blog:
     resource: "@StfalconBlogBundle/Resources/config/routing.yml"
-    
+
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
@@ -96,6 +96,7 @@ In YAML:
 # app/config/config.yml
 # StfalconBlogBundle Configuration
 stfalcon_blog:
+    disqus_shortname: "your-disqus-shortname-goes-here"
     rss:
         title: "your-blog-title-goes-here"
         description: "your-blog-description-goes-here"
