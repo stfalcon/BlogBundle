@@ -19,13 +19,20 @@
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "sonata-project/cache-bundle": "dev-master",
-        "knplabs/knp-paginator-bundle": "dev-master"
+        "knplabs/knp-paginator-bundle": "dev-master",
+        "zendframework/zend-feed": "2.0.*"
     },
     "suggest": {
         "liip/functional-test-bundle": "functional testing bundle",
         "doctrine/doctrine-fixtures-bundle": "required for functional testing",
         "doctrine/data-fixtures": "required for functional testing"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.zendframework.com/"
+        }
+    ],
     "autoload": {
         "psr-0": {
             "Stfalcon\\Bundle\\BlogBundle": ""
