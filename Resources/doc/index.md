@@ -33,6 +33,14 @@ Installation is a quick 4 step process:
 }
 ```
 
+Now tell composer to download the bundle by running the command:
+
+``` bash
+$ php composer.phar update stfalcon/blog-bundle
+```
+
+Composer will install the bundle to your project's `vendor/stfalcon` directory.
+
 ### Step 2: Enable the StfalconBlogBundle and requiremented bundles
 
 Finally, enable the bundle in the kernel:
@@ -88,6 +96,8 @@ _sonata_admin:
     prefix: /admin
 ```
 
+[See more info about routing in SonataAdminBundle](https://github.com/sonata-project/SonataAdminBundle/blob/master/Resources/doc/reference/getting_started.rst#step-1-define-sonataadminbundle-routes)
+
 Add following lines to your config file:
 
 In YAML:
@@ -127,4 +137,7 @@ Run the following command.
 $ php app/console doctrine:schema:update --force
 $ php app/console assets:install
 ```
+At this point you can already access the admin dashboard by visiting the url: http://yoursite.local/admin/dashboard.
+[Getting started with SonataAdminBundle](http://sonata-project.org/bundles/admin/2-0/doc/reference/getting_started.html)
+
 Now that you have completed the installation and configuration of the BlogBundle!
