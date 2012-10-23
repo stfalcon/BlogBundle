@@ -9,6 +9,8 @@ Studio stfalcon.com use this bundle for blog http://stfalcon.com/blog
 
 Features include:
 - Posts & Tags can be stored via Doctrine ORM
+- Pagination of posts and tags
+- Administrating via SonataAdminBundle
 - Syntax highlighting with geshi. Wrap code blocks with  ```<pre lang="LANGUAGE" line="1"> ... </pre>``` where "LANGUAGE" is a [Geshi](http://qbnz.com/highlighter/) supported language syntax.
 - Cut is available with <!--more--> tag
 - PHPUnit tests
