@@ -33,7 +33,7 @@ class Post
      * @Assert\NotBlank()
      * @ORM\Column(name="title", type="string", length=255)
      */
-    private $title;
+    private $title = '';
 
     /**
      * @var string $slug
@@ -313,6 +313,6 @@ class Post
      */
     public function __toString()
     {
-        return $this->getTitle() ?: '-';
+        return $this->getTitle();
     }
 }

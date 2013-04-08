@@ -32,7 +32,7 @@ class Tag
      * @Assert\NotBlank()
      * @ORM\Column(name="text", type="string", length=255)
      */
-    private $text;
+    private $text = '';
 
     /**
      * @var Doctrine\Common\Collections\ArrayCollection
@@ -103,6 +103,6 @@ class Tag
      */
     public function __toString()
     {
-        return $this->getText() ?: '-';
+        return $this->getText();
     }
 }
