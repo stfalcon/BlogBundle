@@ -305,4 +305,14 @@ class Post
     {
         return $this->commentsCount;
     }
+
+    /**
+     * This method allows a class to decide how it will react when it is treated like a string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getTitle() ?: '-';
+    }
 }
