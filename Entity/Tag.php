@@ -32,7 +32,7 @@ class Tag
      * @Assert\NotBlank()
      * @ORM\Column(name="text", type="string", length=255)
      */
-    private $text;
+    private $text = '';
 
     /**
      * @var Doctrine\Common\Collections\ArrayCollection
@@ -94,5 +94,15 @@ class Tag
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * This method allows a class to decide how it will react when it is treated like a string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getText();
     }
 }

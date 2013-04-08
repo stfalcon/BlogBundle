@@ -14,7 +14,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.0",
-        "symfony/symfony": ">=2.1",
+        "symfony/symfony": "2.2.0",
         "stof/doctrine-extensions-bundle": "dev-master",
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",

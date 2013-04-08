@@ -33,7 +33,7 @@ class Post
      * @Assert\NotBlank()
      * @ORM\Column(name="title", type="string", length=255)
      */
-    private $title;
+    private $title = '';
 
     /**
      * @var string $slug
@@ -304,5 +304,15 @@ class Post
     public function getCommentsCount()
     {
         return $this->commentsCount;
+    }
+
+    /**
+     * This method allows a class to decide how it will react when it is treated like a string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }
