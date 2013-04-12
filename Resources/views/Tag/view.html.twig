@@ -4,6 +4,6 @@
     {% if posts %}
         {% include 'StfalconBlogBundle:Post:_posts.html.twig' with {'posts': posts} %}
 
-        {{ posts.render()|raw }}
+        {{ knp_pagination_render(posts) }}
     {% endif %}
 {% endblock %}

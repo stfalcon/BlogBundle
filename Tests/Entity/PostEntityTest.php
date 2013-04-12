@@ -17,7 +17,7 @@ class PostEntityTest extends \PHPUnit_Framework_TestCase
     {
         $post = new Post();
         $this->assertNull($post->getId());
-        $this->assertNull($post->getTitle());
+        $this->assertEmpty($post->getTitle());
         $this->assertNull($post->getText());
         $this->assertNull($post->getSlug());
         $this->assertTrue(is_a($post->getTags(), 'Doctrine\Common\Collections\ArrayCollection'));
