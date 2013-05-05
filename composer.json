@@ -13,13 +13,13 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.0",
-        "symfony/symfony": "2.2.0",
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.2.*",
         "stof/doctrine-extensions-bundle": "dev-master",
-        "sonata-project/admin-bundle": "dev-master",
-        "sonata-project/doctrine-orm-admin-bundle": "dev-master",
-        "sonata-project/cache-bundle": "dev-master",
-        "knplabs/knp-paginator-bundle": "dev-master",
+        "sonata-project/admin-bundle": "2.2.*@dev",
+        "sonata-project/doctrine-orm-admin-bundle": "2.2.*@dev",
+        "sonata-project/cache-bundle": "2.1.*@dev",
+        "knplabs/knp-paginator-bundle": "2.3.*",
         "zendframework/zend-feed": "2.0.*"
     },
     "suggest": {
